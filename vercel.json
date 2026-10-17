@@ -5,11 +5,5 @@
       "source": "/(.*)",
       "destination": "/api/index.py"
     }
-  ],
-  "crons": [
-    {
-      "path": "/cron.php",
-      "schedule": "* * * * *"
-    }
   ]
 }
