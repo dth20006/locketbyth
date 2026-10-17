@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locket Gold Unlocker - Nạp Tiền & Kích Hoạt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #0B0C10;
+            --surface: #1B1D23;
+            --primary: #FFD700;
+            --primary-soft: rgba(255, 215, 0, 0.1);
+            --border: rgba(255, 255, 255, 0.06);
+            --text: #F8F9FA;
+            --text-muted: #8E9196;
+            --ease: cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        body {
+            font-family: 'Be Vietnam Pro', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            letter-spacing: -0.012em;
+        }
+
+        button, input, select, textarea {
+            font-family: inherit;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+            animation: fadeIn 0.8s var(--ease);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Branding */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 64px;
+            height: 64px;
+            background: var(--primary);
+            border-radius: 18px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.25);
+            font-size: 26px;
+            font-weight: 800;
+            color: #000;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* Main Card */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 28px 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            margin-left: 4px;
+        }
+
+        .input-pill {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 15px 18px;
+            display: flex;
+            align-items: center;
+            transition: var(--ease) 0.3s;
+        }
+
+        .input-pill:focus-within {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 215, 0, 0.4);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+        }
+
+        input {
+            background: none;
+            border: none;
+            color: #fff;
+            width: 100%;
+            font-size: 15px;
+            font-weight: 500;
+            font-family: inherit;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Package Selection Cards */
+        .pkg-group-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin: 18px 0 10px 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .pkg-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .pkg-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1.5px solid var(--border);
+            border-radius: 18px;
+            padding: 16px 18px;
+            cursor: pointer;
+            transition: all 0.25s var(--ease);
+            position: relative;
+            text-align: left;
+        }
+
+        .pkg-card:hover {
+            border-color: rgba(255, 215, 0, 0.35);
+            background: rgba(255, 215, 0, 0.03);
+            transform: translateY(-2px);
+        }
+
+        .pkg-card.active {
+            border-color: var(--primary);
+            background: rgba(255, 215, 0, 0.08);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.12);
+        }
+
+        .pkg-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .pkg-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pkg-price {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .pkg-badge {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .badge-recommend {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.25);
+        }
+
+        .badge-budget {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ccc;
+        }
+
+        .pkg-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            line-height: 1.45;
+        }
+
+        .pkg-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .pkg-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 8px;
+        }
+
+        .tag-warning {
+            color: #FFA500;
+            background: rgba(255, 165, 0, 0.12);
+            border: 1px solid rgba(255, 165, 0, 0.25);
+        }
+
+        .tag-dns {
+            color: #34D399;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+        }
+
+        /* Primary Button */
+        .btn-primary {
+            width: 100%;
+            background: var(--primary);
+            color: #000;
+            border: none;
+            border-radius: 16px;
+            padding: 16px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: #FFEA70;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Secondary Info */
+        .info-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .info-pill {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 18px;
+        }
+
+        .info-pill h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-pill p {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Activation Guide Card */
+        .activation-guide-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 20px 18px;
+            backdrop-filter: blur(10px);
+        }
+
+        .guide-header {
+            margin-bottom: 16px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .guide-title-wrap {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .guide-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: rgba(255, 215, 0, 0.12);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .guide-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            margin: 0 0 4px 0;
+            letter-spacing: -0.2px;
+        }
+
+        .guide-subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .guide-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .guide-step-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .step-num-badge {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #eee;
+            font-size: 12.5px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .step-num-badge.highlight {
+            background: rgba(255, 215, 0, 0.15);
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+        }
+
+        .step-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .step-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .step-tag {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 6px;
+            background: rgba(255, 170, 0, 0.15);
+            color: #FFAA00;
+            border: 1px solid rgba(255, 170, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .step-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        .step-desc b {
+            color: #e5e5e5;
+        }
+
+        .guide-warning-box {
+            margin-top: 16px;
+            padding: 13px 15px;
+            background: rgba(255, 82, 82, 0.08);
+            border: 1px solid rgba(255, 82, 82, 0.25);
+            border-radius: 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .warn-head {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #FF5252;
+            margin-bottom: 3px;
+        }
+
+        .warn-desc {
+            font-size: 11.5px;
+            color: #d1d5db;
+            line-height: 1.5;
+        }
+
+        /* Loader */
+        .spinner {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(0, 0, 0, 0.15);
+            border-top-color: #000;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Custom SweetAlert */
+        .clean-popup {
+            background: #1B1D23 !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 26px !important;
+            max-width: 440px !important;
+            width: 92% !important;
+            padding: 24px 20px !important;
+        }
+
+        .clean-confirm {
+            background: var(--primary) !important;
+            color: #000 !important;
+            font-weight: 800 !important;
+            border-radius: 14px !important;
+            padding: 14px 24px !important;
+            font-size: 14px !important;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+
+        .clean-confirm:hover {
+            background: #FFEA70 !important;
+            transform: translateY(-1px);
+        }
+
+        .clean-cancel {
+            background: rgba(255, 255, 255, 0.06) !important;
+            color: #fff !important;
+            border-radius: 14px !important;
+            padding: 14px 20px !important;
+            font-size: 14px !important;
+            margin-right: 10px !important;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+
+        .clean-cancel:hover {
+            background: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        /* User Preview Card */
+        .user-card {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 16px;
+            border-radius: 18px;
+            text-align: left;
+            margin-top: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.12);
+        }
+
+        .user-card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+
+        .user-card-avatar {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: #333;
+            border: 2.5px solid var(--primary);
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .user-card-names {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .user-card-names h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .badge-gold {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        .user-card-names .username-line {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .user-card-details {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .user-detail-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            font-size: 12px;
+        }
+
+        .user-detail-row .detail-label {
+            color: var(--text-muted);
+            min-width: 60px;
+            font-weight: 500;
+        }
+
+        .user-detail-row .detail-value {
+            color: var(--text);
+            font-weight: 600;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Payment QR Modal Styles */
+        .payment-box {
+            text-align: center;
+            padding: 5px 0;
+        }
+
+        .qr-card-wrap {
+            background: #fff;
+            padding: 10px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 8px auto 14px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            border: 3px solid var(--primary);
+        }
+
+        .qr-card-img {
+            width: 200px;
+            height: 200px;
+            display: block;
+            border-radius: 10px;
+            object-fit: contain;
+        }
+
+        .bank-details {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 12px 16px;
+            margin-top: 10px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bank-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12.5px;
+        }
+
+        .bank-row .lbl {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .bank-row .val {
+            color: #fff;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-copy {
+            background: rgba(255, 215, 0, 0.15);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            color: var(--primary);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .btn-copy:hover {
+            background: var(--primary);
+            color: #000;
+        }
+
+        /* DNS Guide Box */
+        .dns-guide-card {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1.5px solid rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
+            padding: 16px;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .dns-guide-card h4 {
+            color: #34D399;
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+        }
+
+        .dns-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .dns-step-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .dns-step-num {
+            background: rgba(52, 211, 153, 0.25);
+            color: #34D399;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .btn-dl-dns {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: #fff;
+            padding: 13px;
+            border-radius: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 13.5px;
+            margin-top: 14px;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .btn-dl-dns:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #059669, #047857);
+        }
+
+        /* Queue Visuals */
+        .queue-wrap {
+            padding: 25px 0;
+            text-align: center;
+        }
+
+        .q-pos {
+            font-size: 46px;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .q-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            margin-bottom: 22px;
+        }
+
+        .q-bar-bg {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 18px;
+        }
+
+        .q-bar-fill {
+            height: 100%;
+            background: var(--primary);
+            width: 0;
+            transition: 1s var(--ease);
+        }
+
+        .q-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12.5px;
+            color: var(--text-muted);
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        footer a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--primary);
+        }
+
+        /* Result & Activation Cards */
+        .result-modal-content {
+            text-align: left;
+            font-size: 13px;
+        }
+        .result-badge-success {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, 0.15);
+            color: #34D399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .result-user-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            font-size: 13.5px;
+        }
+        .activation-card {
+            background: #161922;
+            border-radius: 18px;
+            padding: 16px;
+            margin-bottom: 14px;
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            transition: border-color 0.2s;
+        }
+        .activation-card:hover {
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+        .act-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .act-header h4 {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 800;
+            margin: 0;
+        }
+        .act-tag {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .tag-dns {
+            background: rgba(52, 211, 153, 0.15);
+            color: #34D399;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+        }
+        .act-desc {
+            color: var(--text-muted);
+            font-size: 12px;
+            line-height: 1.45;
+            margin-bottom: 12px;
+        }
+        .btn-dns-action {
+            width: 100%;
+            background: rgba(52, 211, 153, 0.15);
+            color: #34D399;
+            text-decoration: none;
+            padding: 11px 14px;
+            border-radius: 12px;
+            font-size: 12.5px;
+            font-weight: 800;
+            text-align: center;
+            display: inline-block;
+            border: 1px solid rgba(52, 211, 153, 0.35);
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+        .btn-dns-action:hover {
+            background: rgba(52, 211, 153, 0.25);
+        }
+        .act-steps {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 11.5px;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+        .act-steps div {
+            color: rgba(255, 255, 255, 0.65);
+        }
+        .act-steps b {
+            color: #fff;
+        }
+        .act-steps code {
+            color: var(--primary);
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1px 4px;
+            border-radius: 4px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">L</div>
+            <h1>Locket Gold</h1>
+            <p>Nâng cấp & Bảo vệ tài khoản chính chủ</p>
+        </header>
+
+
+
+        <div class="card">
+            <div class="input-group">
+                <label for="username">Tên người dùng</label>
+                <div class="input-pill">
+                    <input type="text" id="username" placeholder="Nhập @username của bạn..." autocomplete="off">
+                </div>
+            </div>
+
+            <div class="pkg-group-title">
+                <span>Chọn Gói Nạp Tiền</span>
+                <span style="font-size: 11px; color: var(--primary);">2 Tùy Chọn</span>
+            </div>
+
+            <div class="pkg-grid">
+                <!-- Gói 2: Giữ Gold (30k) -->
+                <div class="pkg-card active" id="pkg-card-with_dns" onclick="selectPkg('with_dns')">
+                    <div class="pkg-header">
+                        <div class="pkg-title">
+                            <span>🛡️</span>
+                            <span>Giữ Gold (Vĩnh Viễn)</span>
+                        </div>
+                        <span class="pkg-badge badge-recommend">Khuyên Dùng ⭐</span>
+                    </div>
+                    <div class="pkg-desc">Nâng cấp Locket Gold + Mở tải cấu hình DNS chặn quét thu hồi.</div>
+                    <div class="pkg-footer">
+                        <span class="pkg-tag tag-dns">✓ Mở tải DNS giữ Gold</span>
+                        <span class="pkg-price">30.000đ</span>
+                    </div>
+                </div>
+
+                <!-- Gói 1: Không giữ Gold (10k) -->
+                <div class="pkg-card" id="pkg-card-no_dns" onclick="selectPkg('no_dns')">
+                    <div class="pkg-header">
+                        <div class="pkg-title">
+                            <span>⚡</span>
+                            <span>Không Giữ Gold</span>
+                        </div>
+                        <span class="pkg-badge badge-budget">Tiết Kiệm</span>
+                    </div>
+                    <div class="pkg-desc">Nâng cấp Locket Gold nhanh gọn, không dùng DNS bảo vệ.</div>
+                    <div class="pkg-footer">
+                        <span class="pkg-tag tag-warning">⚠️ Có thể mất bất kì lúc nào</span>
+                        <span class="pkg-price">10.000đ</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-primary" id="btnAction" onclick="checkUser()">
+                <span id="btnText">Tiếp Tục Nạp Tiền & Kích Hoạt →</span>
+                <div class="spinner" id="btnLoader"></div>
+            </button>
+        </div>
+
+        <div class="info-section">
+            <div class="info-pill">
+                <h3>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 16v-4M12 8h.01" />
+                    </svg>
+                    Bảng So Sánh 2 Gói
+                </h3>
+                <p id="pkgComparisonText">
+                    • <b>Gói 1 (10.000đ):</b> Không giữ Gold — Gold có thể mất bất cứ khi nào Locket quét.<br>
+                    • <b>Gói 2 (30.000đ):</b> Giữ Gold — Mở tải cấu hình DNS cài vào iPhone để chặn máy chủ kiểm tra, bảo vệ Gold lâu dài.
+                </p>
+            </div>
+            <div class="activation-guide-card">
+                <div class="guide-header">
+                    <div class="guide-title-wrap">
+                        <div class="guide-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="guide-title">Trước và sau khi kích hoạt</h3>
+                            <p class="guide-subtitle">Làm đúng thứ tự để DNS cũ không giữ sai trạng thái và Gold vừa kích hoạt không bị mất.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="guide-steps">
+                    <!-- Bước 1 -->
+                    <div class="guide-step-item">
+                        <div class="step-num-badge highlight">1*</div>
+                        <div class="step-body">
+                            <div class="step-title">
+                                Gỡ hoàn toàn DNS cũ <span class="step-tag">Chỉ khách cũ</span>
+                            </div>
+                            <div class="step-desc">
+                                Nếu thiết bị từng cài DNS Locket, vào <b>Cài đặt → Cài đặt chung → VPN & Quản lý thiết bị</b>, chọn cấu hình cũ rồi bấm <b>Xóa cấu hình</b>. Khách mới chưa từng cài DNS thì bỏ qua bước này.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bước 2 -->
+                    <div class="guide-step-item">
+                        <div class="step-num-badge">2</div>
+                        <div class="step-body">
+                            <div class="step-title">Đăng xuất khỏi Locket</div>
+                            <div class="step-desc">
+                                Mở Locket, đăng xuất đúng tài khoản sắp nâng và giữ ứng dụng ở màn hình đăng nhập.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bước 3 -->
+                    <div class="guide-step-item">
+                        <div class="step-num-badge">3</div>
+                        <div class="step-body">
+                            <div class="step-title">Kích hoạt Gold trên Web</div>
+                            <div class="step-desc">
+                                Quay lại trang này, gửi yêu cầu một lần và giữ trang mở. Vị trí hàng chờ cùng kết quả sẽ tự cập nhật, không cần gửi lại.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bước 4 -->
+                    <div class="guide-step-item">
+                        <div class="step-num-badge">4</div>
+                        <div class="step-body">
+                            <div class="step-title">Đăng nhập lại và kiểm tra Gold</div>
+                            <div class="step-desc">
+                                Chỉ sau khi Web báo thành công, đăng nhập lại đúng tài khoản Locket và xác nhận Gold đã hiển thị.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bước 5 -->
+                    <div class="guide-step-item">
+                        <div class="step-num-badge highlight">5</div>
+                        <div class="step-body">
+                            <div class="step-title">Cài và bật DNS mới</div>
+                            <div class="step-desc">
+                                Khi đã thấy Gold, quay lại kết quả trên Web, tải DNS mới rồi cài và bật DNS để giữ trạng thái Gold.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="guide-warning-box">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF5252" stroke-width="2.5"
+                        style="flex-shrink: 0; margin-top: 1px;">
+                        <path
+                            d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                        <line x1="12" y1="9" x2="12" y2="13" />
+                        <line x1="12" y1="17" x2="12.01" y2="17" />
+                    </svg>
+                    <div>
+                        <div class="warn-head">Chưa thấy Gold thì chưa cài DNS mới.</div>
+                        <div class="warn-desc">
+                            Kiểm tra lại đúng tài khoản; nếu Gold vẫn chưa hiển thị, hãy liên hệ hỗ trợ trước khi tiếp tục.<br>
+                            <span style="opacity: 0.85; margin-top: 4px; display: inline-block;">⚠️ Dành riêng cho thiết bị iOS. Sau khi nâng cấp hoàn tất, không đăng xuất tài khoản để tránh mất quyền lợi Gold.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            Thiết kế bởi <a href="https://tiktok.com/@user.tuanhung" target="_blank">dth206</a> &copy; 2026
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const swalConfig = {
+            customClass: {
+                popup: 'clean-popup',
+                confirmButton: 'clean-confirm',
+                cancelButton: 'clean-cancel'
+            },
+            buttonsStyling: false
+        };
+
+        const BANK_INFO = {
+            bankId: 'MB',
+            bankName: 'MB Bank (Quân Đội)',
+            accountNo: '99991199991',
+            accountName: 'DINH TUAN HUNG'
+        };
+
+        const PACKAGES = {
+            with_dns: {
+                id: 'with_dns',
+                name: 'Giữ Gold (Vĩnh Viễn)',
+                price: 30000,
+                priceFormatted: '30.000đ',
+                badge: 'Khuyên Dùng ⭐',
+                tag: '🛡️ Mở tải DNS giữ Gold',
+                desc: 'Nâng cấp Gold + Mở tải cấu hình DNS chặn quét thu hồi',
+                hasDns: true
+            },
+            no_dns: {
+                id: 'no_dns',
+                name: 'Không Giữ Gold',
+                price: 10000,
+                priceFormatted: '10.000đ',
+                badge: 'Tiết Kiệm',
+                tag: '⚠️ Có thể mất bất kì lúc nào',
+                desc: 'Nâng cấp Gold nhanh gọn, không cài đặt bảo vệ DNS',
+                hasDns: false
+            }
+        };
+
+        async function initPaymentConfig() {
+            try {
+                const res = await fetch('/api/payment-info');
+                const json = await res.json();
+                if (res.ok && json.success && json.data) {
+                    const cfg = json.data;
+                    if (cfg.bank_id) BANK_INFO.bankId = cfg.bank_id;
+                    if (cfg.bank_name) BANK_INFO.bankName = cfg.bank_name;
+                    if (cfg.account_number) BANK_INFO.accountNo = cfg.account_number;
+                    if (cfg.account_name) BANK_INFO.accountName = cfg.account_name;
+
+                    if (cfg.packages) {
+                        if (cfg.packages.with_dns) {
+                            const p = cfg.packages.with_dns;
+                            PACKAGES.with_dns.price = p.price;
+                            PACKAGES.with_dns.priceFormatted = p.price_formatted || `${p.price}đ`;
+                            PACKAGES.with_dns.name = p.name || PACKAGES.with_dns.name;
+                            PACKAGES.with_dns.badge = p.badge || PACKAGES.with_dns.badge;
+                            PACKAGES.with_dns.desc = p.desc || PACKAGES.with_dns.desc;
+
+                            const card = document.getElementById('pkg-card-with_dns');
+                            if (card) {
+                                const priceEl = card.querySelector('.pkg-price');
+                                if (priceEl) priceEl.textContent = PACKAGES.with_dns.priceFormatted;
+                                const titleEl = card.querySelector('.pkg-title span:last-child');
+                                if (titleEl) titleEl.textContent = PACKAGES.with_dns.name;
+                                const badgeEl = card.querySelector('.pkg-badge');
+                                if (badgeEl) badgeEl.textContent = PACKAGES.with_dns.badge;
+                                const descEl = card.querySelector('.pkg-desc');
+                                if (descEl) descEl.textContent = PACKAGES.with_dns.desc;
+                            }
+                        }
+
+                        if (cfg.packages.no_dns) {
+                            const p = cfg.packages.no_dns;
+                            PACKAGES.no_dns.price = p.price;
+                            PACKAGES.no_dns.priceFormatted = p.price_formatted || `${p.price}đ`;
+                            PACKAGES.no_dns.name = p.name || PACKAGES.no_dns.name;
+                            PACKAGES.no_dns.badge = p.badge || PACKAGES.no_dns.badge;
+                            PACKAGES.no_dns.desc = p.desc || PACKAGES.no_dns.desc;
+
+                            const card = document.getElementById('pkg-card-no_dns');
+                            if (card) {
+                                const priceEl = card.querySelector('.pkg-price');
+                                if (priceEl) priceEl.textContent = PACKAGES.no_dns.priceFormatted;
+                                const titleEl = card.querySelector('.pkg-title span:last-child');
+                                if (titleEl) titleEl.textContent = PACKAGES.no_dns.name;
+                                const badgeEl = card.querySelector('.pkg-badge');
+                                if (badgeEl) badgeEl.textContent = PACKAGES.no_dns.badge;
+                                const descEl = card.querySelector('.pkg-desc');
+                                if (descEl) descEl.textContent = PACKAGES.no_dns.desc;
+                                const tagEl = card.querySelector('.pkg-tag');
+                                if (tagEl && p.warning) tagEl.textContent = p.warning;
+                            }
+                        }
+
+                        const compareEl = document.getElementById('pkgComparisonText');
+                        if (compareEl && cfg.packages.no_dns && cfg.packages.with_dns) {
+                            compareEl.innerHTML = `
+                                • <b>Gói 1 (${PACKAGES.no_dns.priceFormatted}):</b> ${PACKAGES.no_dns.name} — ${PACKAGES.no_dns.desc || 'Gold có thể mất bất cứ khi nào Locket quét.'}<br>
+                                • <b>Gói 2 (${PACKAGES.with_dns.priceFormatted}):</b> ${PACKAGES.with_dns.name} — ${PACKAGES.with_dns.desc || 'Mở tải cấu hình DNS cài vào iPhone để chặn máy chủ kiểm tra, bảo vệ Gold lâu dài.'}
+                            `;
+                        }
+                    }
+                }
+            } catch (err) {
+                console.log('Using default pricing', err);
+            }
+        }
+        initPaymentConfig();
+
+        let currentSelectedPkg = 'with_dns';
+
+        function selectPkg(pkgId) {
+            currentSelectedPkg = pkgId;
+            document.querySelectorAll('.pkg-card').forEach(el => el.classList.remove('active'));
+            const target = document.getElementById(`pkg-card-${pkgId}`);
+            if (target) target.classList.add('active');
+        }
+
+        function copyToClipboard(text, btnEl) {
+            navigator.clipboard.writeText(text).then(() => {
+                const orig = btnEl.textContent;
+                btnEl.textContent = 'Đã chép ✓';
+                btnEl.style.background = '#10B981';
+                btnEl.style.color = '#fff';
+                setTimeout(() => {
+                    btnEl.textContent = orig;
+                    btnEl.style.background = '';
+                    btnEl.style.color = '';
+                }, 1500);
+            }).catch(() => {
+                prompt('Sao chép nội dung bên dưới:', text);
+            });
+        }
+
+        async function checkUser() {
+            const input = document.getElementById('username');
+            const user = input.value.trim().replace(/^@/, '');
+            const btn = document.getElementById('btnAction');
+            const loader = document.getElementById('btnLoader');
+            const text = document.getElementById('btnText');
+
+            if (!user) {
+                Swal.fire({ icon: 'warning', title: 'Thông báo', text: 'Vui lòng nhập username Locket.', ...swalConfig });
+                return;
+            }
+
+            btn.disabled = true;
+            loader.style.display = 'block';
+            text.style.display = 'none';
+
+            try {
+                const res = await fetch('/api/get-user-info', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: user }),
+                });
+                let data;
+                try {
+                    data = await res.json();
+                } catch {
+                    throw new Error(`Server trả về phản hồi không hợp lệ (HTTP ${res.status}).`);
+                }
+
+                if (res.ok && data.success) {
+                    confirmUser(data.data);
+                } else {
+                    Swal.fire({ icon: 'error', title: 'Thất bại', text: data.msg || "Không tìm thấy người dùng.", ...swalConfig });
+                }
+            } catch (error) {
+                const message = error instanceof TypeError
+                    ? 'Không kết nối được server. Hãy kiểm tra app.py đang chạy.'
+                    : error.message;
+                Swal.fire({ icon: 'error', title: 'Lỗi', text: message, ...swalConfig });
+            } finally {
+                btn.disabled = false;
+                loader.style.display = 'none';
+                text.style.display = 'block';
+            }
+        }
+
+        function confirmUser(u) {
+            const combinedName = `${u.last_name || ''} ${u.first_name || ''}`.trim();
+            const rawRealName = (u.display_name && u.display_name.trim()) || combinedName || (u.first_name && u.first_name.trim()) || '';
+            const isSameAsUsername = rawRealName && rawRealName.toLowerCase() === (u.username || '').toLowerCase();
+            const realLocketName = (!isSameAsUsername && rawRealName) ? rawRealName : '';
+            const headerDisplayName = realLocketName || `@${u.username}`;
+            const locketNameDisplay = realLocketName || 'Chưa đặt tên';
+
+            const ava = u.profile_picture_url || 'https://play-lh.googleusercontent.com/eRZLg00mAQGayCrFjDBklPIpW3qFHcmUs8PUQA4z7hVe-cDKMcRqecVHONAIexJGJZM';
+            const badgeHtml = u.badge ? `<span class="badge-gold">${u.badge}</span>` : '';
+            const pkg = PACKAGES[currentSelectedPkg];
+
+            Swal.fire({
+                title: 'Xác nhận thông tin',
+                html: `
+                <div class="user-card">
+                    <div class="user-card-header">
+                        <img class="user-card-avatar" src="${ava}" onerror="this.src='https://play-lh.googleusercontent.com/eRZLg00mAQGayCrFjDBklPIpW3qFHcmUs8PUQA4z7hVe-cDKMcRqecVHONAIexJGJZM'">
+                        <div class="user-card-names">
+                            <h4>${headerDisplayName} ${badgeHtml}</h4>
+                            <p class="username-line">@${u.username}</p>
+                        </div>
+                    </div>
+                    <div class="user-card-details">
+                        <div class="user-detail-row">
+                            <span class="detail-label">Tên gốc Locket</span>
+                            <span class="detail-value" style="font-weight: 700; color: #fff;">
+                                ${locketNameDisplay}
+                                ${(!realLocketName && !currentLocketStatus.connected) ? `<a href="javascript:void(0)" onclick="openLocketAuthModal()" style="font-size:11px;color:var(--primary);text-decoration:underline;margin-left:6px;font-weight:600;">[🔑 Điền tài khoản Locket]</a>` : ''}
+                            </span>
+                        </div>
+                        <div class="user-detail-row">
+                            <span class="detail-label">UID</span>
+                            <span class="detail-value" style="font-size:11px;font-family:monospace;">${u.uid}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 14px; text-align: left; background: rgba(255,215,0,0.06); border: 1.5px solid rgba(255,215,0,0.3); border-radius: 16px; padding: 14px 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-size: 13px; font-weight: 700; color: #fff;">Gói: ${pkg.name}</span>
+                        <span style="font-size: 15px; font-weight: 800; color: var(--primary);">${pkg.priceFormatted}</span>
+                    </div>
+                    <div style="font-size: 12px; color: ${pkg.hasDns ? '#34D399' : '#FFA500'}; font-weight: 600;">
+                        ${pkg.tag}
+                    </div>
+                </div>
+            `,
+                ...swalConfig,
+                showCancelButton: true,
+                confirmButtonText: 'Tiến hành nạp tiền →',
+                cancelButtonText: 'Đổi username'
+            }).then(r => {
+                if (r.isConfirmed) {
+                    openPaymentModal(u, currentSelectedPkg);
+                }
+            });
+        }
+
+        let paymentPollingTimer = null;
+
+        async function openPaymentModal(u, pkgId) {
+            if (paymentPollingTimer) {
+                clearInterval(paymentPollingTimer);
+                paymentPollingTimer = null;
+            }
+
+            Swal.fire({
+                title: 'Đang tạo mã thanh toán...',
+                html: '<span style="color:var(--text-muted);font-size:13px;">Hệ thống đang kết nối ngân hàng để tạo mã QR tự động...</span>',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+                ...swalConfig
+            });
+
+            try {
+                const res = await fetch('/api/payment/create-order', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: u.username, uid: u.uid, package_type: pkgId })
+                });
+                const orderData = await res.json();
+                if (!res.ok || !orderData.success) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi tạo đơn',
+                        text: orderData.msg || 'Không thể tạo đơn hàng, vui lòng thử lại sau.',
+                        ...swalConfig
+                    });
+                    return;
+                }
+
+                const order = orderData;
+                const pkg = PACKAGES[pkgId] || {};
+
+                Swal.fire({
+                    title: 'Nạp Tiền Nâng Cấp Gold',
+                    html: `
+                    <div class="payment-box">
+                        <div style="background: rgba(255, 215, 0, 0.08); border: 1.5px dashed var(--primary); border-radius: 12px; padding: 10px 12px; margin-bottom: 12px; text-align: center;">
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                <span style="display: inline-block; width: 12px; height: 12px; border: 2.5px solid #FFD700; border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite;"></span>
+                                <span id="paymentStatusText" style="font-size: 13px; font-weight: 700; color: #FFD700;">Hệ thống đang chờ giao dịch...</span>
+                            </div>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">
+                                Tự động duyệt sau 2-3 giây khi tiền nổ vào tài khoản ZaloPay / Bản Việt!
+                            </div>
+                        </div>
+
+                        <div class="qr-card-wrap">
+                            <img src="${order.qr_url}" alt="VietQR Nạp Tiền" class="qr-card-img" style="border: 2px solid rgba(255,215,0,0.3); border-radius: 12px;">
+                        </div>
+
+                        <div class="bank-details" style="margin-top: 12px;">
+                            <div class="bank-row">
+                                <span class="lbl">Ngân hàng</span>
+                                <span class="val" style="font-weight: 700;">${order.bank_name}</span>
+                            </div>
+                            <div class="bank-row">
+                                <span class="lbl">Số tài khoản</span>
+                                <span class="val">
+                                    <span style="font-weight: 800; font-family: monospace; color: #fff;">${order.account_no}</span>
+                                    <button class="btn-copy" onclick="copyToClipboard('${order.account_no}', this)">Copy</button>
+                                </span>
+                            </div>
+                            <div class="bank-row">
+                                <span class="lbl">Chủ tài khoản</span>
+                                <span class="val" style="font-size: 12px;">${order.account_name}</span>
+                            </div>
+                            <div class="bank-row">
+                                <span class="lbl">Số tiền</span>
+                                <span class="val" style="color: var(--primary); font-weight: 800; font-size: 15px;">
+                                    <span>${order.amount_formatted}</span>
+                                    <button class="btn-copy" onclick="copyToClipboard('${order.amount}', this)">Copy</button>
+                                </span>
+                            </div>
+                            <div class="bank-row" style="background: rgba(255, 68, 68, 0.08); padding: 8px 10px; border-radius: 8px; border: 1.5px solid rgba(255, 68, 68, 0.4);">
+                                <span class="lbl" style="color: #FF8888; font-weight: 700;">Nội dung CK</span>
+                                <span class="val">
+                                    <span style="color: #FFD700; font-family: monospace; font-weight: 900; font-size: 16px;">${order.content}</span>
+                                    <button class="btn-copy" style="background: #FFD700; color: #000; font-weight: 700;" onclick="copyToClipboard('${order.content}', this)">Copy ID</button>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div style="font-size: 11.5px; color: #FF7777; margin-top: 10px; font-weight: 600; text-align: center;">
+                            ⚠️ BẮT BUỘC ghi đúng nội dung ID Locket: <b style="color: #FFD700;">${order.content}</b> để hệ thống tự động kích hoạt!
+                        </div>
+                    </div>
+                `,
+                    ...swalConfig,
+                    showCancelButton: true,
+                    confirmButtonText: '🔄 Kiểm Tra Thanh Toán',
+                    cancelButtonText: 'Hủy bỏ',
+                    didOpen: () => {
+                        // Poll payment status every 2.5s
+                        paymentPollingTimer = setInterval(async () => {
+                            try {
+                                const chkUrl = `/api/payment/check?order_id=${encodeURIComponent(order.order_id)}&username=${encodeURIComponent(u.username)}&package_type=${encodeURIComponent(pkgId)}&amount=${encodeURIComponent(order.amount)}`;
+                                const chkRes = await fetch(chkUrl);
+                                const chkData = await chkRes.json();
+                                if (chkData.success && chkData.is_paid) {
+                                    clearInterval(paymentPollingTimer);
+                                    paymentPollingTimer = null;
+
+                                    const statusEl = document.getElementById('paymentStatusText');
+                                    if (statusEl) {
+                                        statusEl.textContent = '✅ Đã nhận được tiền! Đang kích hoạt Gold...';
+                                        statusEl.style.color = '#34D399';
+                                    }
+
+                                    setTimeout(() => {
+                                        Swal.close();
+                                        if (chkData.client_id) {
+                                            showQueue(chkData.client_id, u.username, pkgId);
+                                        } else {
+                                            startProcess(u.username, pkgId, order.order_id);
+                                        }
+                                    }, 800);
+                                }
+                            } catch (err) {
+                                console.error('Lỗi kiểm tra đơn:', err);
+                            }
+                        }, 2500);
+                    },
+                    willClose: () => {
+                        if (paymentPollingTimer) {
+                            clearInterval(paymentPollingTimer);
+                            paymentPollingTimer = null;
+                        }
+                    }
+                }).then(async (r) => {
+                    if (r.isConfirmed) {
+                        // User clicked manual check button
+                        Swal.showLoading();
+                        try {
+                            const chkUrl = `/api/payment/check?order_id=${encodeURIComponent(order.order_id)}&username=${encodeURIComponent(u.username)}&package_type=${encodeURIComponent(pkgId)}&amount=${encodeURIComponent(order.amount)}`;
+                            const chkRes = await fetch(chkUrl);
+                            const chkData = await chkRes.json();
+                            if (chkData.success && chkData.is_paid) {
+                                if (paymentPollingTimer) clearInterval(paymentPollingTimer);
+                                if (chkData.client_id) {
+                                    showQueue(chkData.client_id, u.username, pkgId);
+                                } else {
+                                    startProcess(u.username, pkgId, order.order_id);
+                                }
+                            } else {
+                                Swal.fire({
+                                    icon: 'info',
+                                    title: 'Đang Chờ Tiền Vào',
+                                    html: `Hệ thống chưa ghi nhận tiền cho mã đơn <b style="color:var(--primary);">${order.content}</b>.<br><br><span style="font-size:12px;color:var(--text-muted);">Nếu bạn vừa chuyển khoản, vui lòng đợi 5-10 giây để ngân hàng gửi thông báo, hệ thống sẽ tự kích hoạt ngay!</span>`,
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Tiếp tục chờ thanh toán',
+                                    cancelButtonText: 'Đóng',
+                                    ...swalConfig
+                                }).then(subR => {
+                                    if (subR.isConfirmed) {
+                                        openPaymentModal(u, pkgId);
+                                    }
+                                });
+                            }
+                        } catch (e) {
+                            Swal.fire({ icon: 'error', title: 'Lỗi', text: 'Không thể kết nối để kiểm tra thanh toán.', ...swalConfig });
+                        }
+                    }
+                });
+
+            } catch (err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi kết nối',
+                    text: 'Không thể kết nối đến máy chủ thanh toán.',
+                    ...swalConfig
+                });
+            }
+        }
+
+        async function startProcess(user, pkgId, orderId = null) {
+            try {
+                const res = await fetch('/api/restore', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: user, package_type: pkgId, order_id: orderId }),
+                });
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    showQueue(data.client_id, user, pkgId);
+                } else {
+                    Swal.fire({ icon: 'error', title: 'Lỗi', text: data.msg || "Hàng chờ đầy hoặc hệ thống bận.", ...swalConfig });
+                }
+            } catch (e) {
+                Swal.fire({ icon: 'error', title: 'Lỗi', text: 'Không thể bắt đầu xử lý.', ...swalConfig });
+            }
+        }
+
+        function showQueue(cid, user, pkgId) {
+            Swal.fire({
+                title: 'Hàng chờ xử lý',
+                html: `
+                    <div class="queue-wrap">
+                        <div class="q-pos" id="qPos">--</div>
+                        <div class="q-label">Vị trí hiện tại</div>
+                        <div class="q-bar-bg"><div id="qBar" class="q-bar-fill"></div></div>
+                        <div class="q-stats">
+                            <div>Chờ: <span id="qTotal" style="color:#fff">--</span></div>
+                            <div>Còn lại: <span id="qEta" style="color:#fff">--</span></div>
+                        </div>
+                    </div>
+                `,
+                ...swalConfig,
+                showConfirmButton: false,
+                allowOutsideClick: false
+            });
+            pollQueue(cid, user, pkgId);
+        }
+
+        let countdown = null;
+        let etaVal = 0;
+
+        async function pollQueue(cid, user, pkgId) {
+            try {
+                const res = await fetch('/api/queue/status', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ client_id: cid }),
+                });
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    const pos = document.getElementById('qPos');
+                    const bar = document.getElementById('qBar');
+                    const tot = document.getElementById('qTotal');
+
+                    if (data.status === 'completed') {
+                        clearInterval(countdown);
+                        handleSuccess(user, pkgId, cid);
+                    } else if (data.status === 'error') {
+                        clearInterval(countdown);
+                        Swal.fire({ icon: 'error', title: 'Lỗi', text: data.error || 'Nâng cấp thất bại.', ...swalConfig });
+                    } else {
+                        if (pos) {
+                            pos.textContent = data.status === 'processing' ? '⚡' : `#${data.position}`;
+                            tot.textContent = data.total_queue;
+                            const perc = Math.max(5, (1 - (data.position / (data.total_queue + 1))) * 100);
+                            bar.style.width = `${perc}%`;
+                        }
+                        etaVal = data.estimated_time;
+                        updateTimeDisplay();
+                        clearInterval(countdown);
+                        if (etaVal > 0) countdown = setInterval(() => { if (etaVal > 0) { etaVal--; updateTimeDisplay(); } }, 1000);
+                        setTimeout(() => pollQueue(cid, user, pkgId), 1000);
+                    }
+                }
+            } catch (e) {
+                setTimeout(() => pollQueue(cid, user, pkgId), 2000);
+            }
+        }
+
+        function handleSuccess(user, pkgId, cid) {
+            const pkg = PACKAGES[pkgId] || PACKAGES.with_dns;
+            const dnsUrl = `/download-config?cid=${encodeURIComponent(cid || '')}`;
+
+            if (pkg.hasDns) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Nâng Cấp & Giữ Gold Thành Công!',
+                    width: '520px',
+                    html: `
+                        <div class="result-modal-content">
+                            <div class="result-badge-success">✨ Kích Hoạt Thành Công</div>
+                            <p class="result-user-subtitle">
+                                Tài khoản <b>@${user}</b> đã được kết nối gói <b>${pkg.name}</b>.
+                            </p>
+
+                            <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); text-align: left; padding: 12px 14px; border-radius: 12px; margin-bottom: 12px;">
+                                <div style="color: #34d399; font-size: 13px; font-weight: 600; margin-bottom: 4px;">
+                                    📱 Cách hiển thị Gold ngay trên iPhone:
+                                </div>
+                                <div style="color: #cbd5e1; font-size: 12px; line-height: 1.5;">
+                                    Vuốt từ dưới lên để <b>đóng hoàn toàn app Locket</b> từ trình đa nhiệm, sau đó mở lại app để Locket tải ngay quyền Gold!
+                                </div>
+                            </div>
+
+                            <div class="activation-card dns-card">
+                                <div class="act-header">
+                                    <h4>🛡️ Cài Đặt Cấu Hình DNS Giữ Gold</h4>
+                                    <span class="act-tag tag-dns">Khuyên Dùng</span>
+                                </div>
+                                <p class="act-desc">
+                                    Cài đặt hồ sơ cấu hình DNS vào iPhone để chặn máy chủ kiểm tra bản quyền, bảo vệ trạng thái Gold lâu dài.
+                                </p>
+                                <a href="${dnsUrl}" class="btn-dns-action" style="font-size: 14px; padding: 13px; display: block; text-align: center; margin-bottom: 8px;">
+                                    ⏬ Tải Cấu Hình DNS (.mobileconfig)
+                                </a>
+                                <div class="act-steps" style="font-size: 12px;">
+                                    <div><b>Bước 1:</b> Bấm <b>Tải Cấu Hình DNS</b> -> Chọn <b>Cho phép (Allow)</b>.</div>
+                                    <div><b>Bước 2:</b> Vào <b>Cài đặt (Settings)</b> iPhone -> Chọn <b>Đã tải về hồ sơ</b>.</div>
+                                    <div><b>Bước 3:</b> Bấm <b>Cài đặt</b> góc trên bên phải -> Nhập mật mã máy -> Xong!</div>
+                                </div>
+                            </div>
+                        </div>
+                    `,
+                    ...swalConfig,
+                    confirmButtonText: 'Đã hoàn tất 🎉'
+                });
+            } else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Nâng Cấp Locket Gold Thành Công!',
+                    width: '520px',
+                    html: `
+                        <div class="result-modal-content">
+                            <div class="result-badge-success">✨ Kích Hoạt Thành Công</div>
+                            <p class="result-user-subtitle">
+                                Tài khoản <b>@${user}</b> đã được kích hoạt Gold thành công trên máy chủ!
+                            </p>
+
+                            <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); text-align: left; padding: 12px 14px; border-radius: 12px; margin-bottom: 12px;">
+                                <div style="color: #34d399; font-size: 13px; font-weight: 600; margin-bottom: 4px;">
+                                    📱 Cách hiển thị Gold ngay trên iPhone:
+                                </div>
+                                <div style="color: #cbd5e1; font-size: 12px; line-height: 1.5;">
+                                    Vuốt từ dưới lên để <b>đóng hoàn toàn app Locket</b> từ trình đa nhiệm, sau đó mở lại app để Locket cập nhật ngay huy hiệu và quyền Gold!
+                                </div>
+                            </div>
+
+                            <div style="background: rgba(255, 165, 0, 0.1); border: 1px solid rgba(255, 165, 0, 0.3); text-align: left; padding: 12px 14px; border-radius: 12px; margin-bottom: 10px;">
+                                <div style="color: #FFA500; font-size: 13px; font-weight: 600; margin-bottom: 4px;">
+                                    ⚠️ Lưu ý về gói Không Giữ Gold:
+                                </div>
+                                <div style="color: #cbd5e1; font-size: 12px; line-height: 1.5;">
+                                    Gói này <b>không bao gồm Cấu hình DNS chống thu hồi</b>. Quyền Gold có thể bị mất nếu máy chủ StoreKit quét bản quyền định kỳ. Để được bảo vệ vĩnh viễn, bạn có thể quay lại chọn gói <b>Có Giữ Gold (Kèm DNS)</b> ở lần nâng cấp tiếp theo!
+                                </div>
+                            </div>
+                        </div>
+                    `,
+                    ...swalConfig,
+                    confirmButtonText: 'Tuyệt vời 🎉'
+                });
+            }
+        }
+
+        function updateTimeDisplay() {
+            const el = document.getElementById('qEta');
+            if (!el) return;
+            if (etaVal <= 0) el.textContent = 'Sắp xong';
+            else if (etaVal < 60) el.textContent = `${etaVal}s`;
+            else el.textContent = `${Math.floor(etaVal / 60)}p ${etaVal % 60}s`;
+        }
+
+        document.getElementById("username").onkeyup = e => e.key === "Enter" && checkUser();
+    </script>
+</body>
+
+</html>

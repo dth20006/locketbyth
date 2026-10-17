@@ -1,0 +1,2207 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Quản Lý Locket Gold</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #090A0E;
+            --surface: #13151B;
+            --surface-card: #181B23;
+            --surface-hover: #1F232D;
+            --primary: #FFD700;
+            --primary-hover: #F0C400;
+            --primary-soft: rgba(255, 215, 0, 0.12);
+            --primary-border: rgba(255, 215, 0, 0.25);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.16);
+            --text: #F8F9FA;
+            --text-muted: #8E93A0;
+            --text-dim: #5C6170;
+            --success: #10B981;
+            --success-soft: rgba(16, 185, 129, 0.12);
+            --danger: #EF4444;
+            --danger-soft: rgba(239, 68, 68, 0.12);
+            --warning: #F59E0B;
+            --warning-soft: rgba(245, 158, 11, 0.12);
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-full: 9999px;
+            --ease: cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        body {
+            font-family: 'Be Vietnam Pro', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            letter-spacing: -0.01em;
+        }
+
+        /* Top Navbar */
+        .navbar {
+            background: rgba(19, 21, 27, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 28px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .brand-logo {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 19px;
+            color: #000;
+            box-shadow: 0 4px 14px rgba(255, 215, 0, 0.3);
+        }
+
+        .brand-text h1 {
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+        }
+
+        .brand-text span {
+            font-size: 11px;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-nav {
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 12.5px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s var(--ease);
+            border: 1px solid var(--border);
+            background: var(--surface-card);
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .btn-nav:hover {
+            border-color: var(--border-hover);
+            background: var(--surface-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-nav.primary {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+        }
+
+        .btn-nav.primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-nav.logout {
+            color: var(--danger);
+            border-color: rgba(239, 68, 68, 0.2);
+            background: var(--danger-soft);
+        }
+
+        .btn-nav.logout:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        /* Container */
+        .main-wrapper {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 24px 20px 60px;
+            flex: 1;
+        }
+
+        /* Login Card */
+        .login-container {
+            max-width: 420px;
+            margin: 60px auto 0;
+            animation: slideUp 0.4s var(--ease);
+        }
+
+        .login-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 36px 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .login-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            background: var(--primary-soft);
+            border: 1px solid var(--primary-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            margin: 0 auto 18px;
+        }
+
+        .login-card h2 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .login-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        /* Dashboard Tabs */
+        .dashboard-nav {
+            display: flex;
+            gap: 8px;
+            background: var(--surface);
+            padding: 6px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            white-space: nowrap;
+            transition: all 0.2s var(--ease);
+        }
+
+        .tab-btn:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.25);
+        }
+
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.3s var(--ease);
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        /* Cards & Grid */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title span.badge-num {
+            background: var(--primary-soft);
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--primary-border);
+        }
+
+        .card-desc {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        /* Forms & Inputs */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        label {
+            display: block;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        label .sub {
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--text-muted);
+            margin-left: 4px;
+        }
+
+        .input-box,
+        input[type="text"],
+        input[type="password"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            background: var(--surface-card);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+            color: var(--text);
+            font-size: 13.5px;
+            font-family: inherit;
+            transition: all 0.2s var(--ease);
+        }
+
+        .input-box:focus,
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.15);
+            background: var(--surface-hover);
+        }
+
+        textarea {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            resize: vertical;
+        }
+
+        .input-code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12.5px;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--primary);
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            font-size: 13.5px;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s var(--ease);
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(255, 215, 0, 0.25);
+        }
+
+        .btn-secondary {
+            background: var(--surface-card);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s var(--ease);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface-hover);
+            border-color: var(--border-hover);
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 11.5px;
+            border-radius: var(--radius-sm);
+        }
+
+        /* Token Cards */
+        .token-item {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 18px;
+            margin-bottom: 14px;
+            transition: all 0.2s var(--ease);
+        }
+
+        .token-item:hover {
+            border-color: var(--border-hover);
+            background: var(--surface-hover);
+        }
+
+        .token-item.is-active {
+            border-left: 4px solid var(--primary);
+        }
+
+        .token-item.is-inactive {
+            opacity: 0.6;
+            border-left: 4px solid var(--text-dim);
+        }
+
+        .token-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .token-title {
+            font-size: 14.5px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge-status {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: var(--radius-full);
+        }
+
+        .badge-active {
+            background: var(--success-soft);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .badge-inactive {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+
+        .badge-expired {
+            background: var(--danger-soft);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .badge-valid {
+            background: var(--success-soft);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .badge-live-ok {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.4);
+        }
+
+        .badge-live-err {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+        }
+
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.4);
+        }
+
+        .badge-info {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.4);
+        }
+
+        .token-explanation-box {
+            font-size: 11.5px;
+            line-height: 1.5;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+        }
+
+        .token-exp-warn {
+            background: rgba(245, 158, 11, 0.08);
+            border-left: 3px solid #f59e0b;
+            color: #e2e8f0;
+        }
+
+        .token-exp-ok {
+            background: rgba(16, 185, 129, 0.08);
+            border-left: 3px solid #10b981;
+            color: #e2e8f0;
+        }
+
+        .token-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .token-meta span {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        .token-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+            opacity: 0.8;
+        }
+
+        .stat-num {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 4px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .stat-lbl {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* Table */
+        .table-wrap {
+            overflow-x: auto;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12.5px;
+            text-align: left;
+        }
+
+        th {
+            background: var(--surface-card);
+            color: var(--text-muted);
+            font-weight: 700;
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* VietQR Preview */
+        .vietqr-preview-box {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 18px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .vietqr-img {
+            max-width: 220px;
+            width: 100%;
+            border-radius: 12px;
+            border: 1.5px solid var(--primary-border);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            margin: 12px 0;
+            background: #fff;
+            padding: 8px;
+        }
+
+        /* Banner info */
+        .tip-box {
+            background: rgba(255, 215, 0, 0.06);
+            border: 1px solid var(--primary-border);
+            border-radius: var(--radius-md);
+            padding: 14px 18px;
+            font-size: 12.5px;
+            line-height: 1.6;
+            color: var(--text);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .tip-box svg {
+            color: var(--primary);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <a href="/admin" class="nav-brand">
+            <div class="brand-logo">L</div>
+            <div class="brand-text">
+                <h1>Locket Gold Admin</h1>
+                <span>● Hệ Thống Quản Trị</span>
+            </div>
+        </a>
+        <div class="nav-actions">
+            <a href="/" target="_blank" class="btn-nav">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                Trang Chủ Khách
+            </a>
+            <button id="btnLogout" class="btn-nav logout hidden" onclick="logout()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Đăng Xuất
+            </button>
+        </div>
+    </header>
+
+    <main class="main-wrapper">
+        <!-- Login Card -->
+        <div id="loginSection" class="login-container">
+            <div class="login-card">
+                <div class="login-icon">🔐</div>
+                <h2>Đăng Nhập Quản Trị</h2>
+                <p>Nhập mật khẩu Admin để truy cập cấu hình hệ thống</p>
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group" style="text-align: left;">
+                        <label for="adminPassword">Mật khẩu Admin</label>
+                        <input type="password" id="adminPassword" placeholder="Nhập mật khẩu..." required autocomplete="current-password">
+                    </div>
+                    <button type="submit" id="btnLoginSubmit" class="btn-primary" style="margin-top: 10px;">
+                        <span>Vào Bảng Điều Khiển →</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboardSection" class="hidden">
+            <!-- Navigation Tabs -->
+            <div class="dashboard-nav">
+                <button class="tab-btn active" onclick="switchTab('pricing')">
+                    💰 Chỉnh Giá & VietQR
+                </button>
+                <button class="tab-btn" onclick="switchTab('tokens')">
+                    ⚡ Quản Lý API Token
+                </button>
+                <button class="tab-btn" onclick="switchTab('stats')">
+                    📊 Hàng Chờ & Lịch Sử
+                </button>
+                <button class="tab-btn" onclick="switchTab('settings')">
+                    ⚙️ Cài Đặt Hệ Thống
+                </button>
+                <button class="tab-btn" onclick="switchTab('dns')">
+                    🛡️ Cấu Hình DNS
+                </button>
+                <button class="tab-btn" onclick="switchTab('orders')">
+                    💳 Đơn Auto Bank
+                </button>
+            </div>
+
+            <!-- Tab 1: Pricing & Bank -->
+            <div id="tab-pricing" class="tab-pane active">
+                <div class="tip-box">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                    <div>
+                        <b>Cập nhật tức thời:</b> Mọi thay đổi về giá hoặc tài khoản ngân hàng sẽ được lưu vào <code>config.json</code> và tự động cập nhật ngay trên trang chủ khách hàng và mã VietQR thanh toán.
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <!-- Package 1: no_dns -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <span>⚡</span> Gói Không Giữ Gold
+                                <span class="badge-num" id="no_dns_badge_num">10.000đ</span>
+                            </div>
+                        </div>
+                        <form onsubmit="savePackagePrice(event, 'no_dns')">
+                            <div class="form-group">
+                                <label>Giá gói (VND)</label>
+                                <input type="number" id="no_dns_price" step="1000" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Tên gói hiển thị</label>
+                                <input type="text" id="no_dns_name" required>
+                            </div>
+                            <div class="form-row">
+                                <div>
+                                    <label>Huy hiệu (Badge)</label>
+                                    <input type="text" id="no_dns_badge" placeholder="Tiết Kiệm">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Mô tả gói</label>
+                                <input type="text" id="no_dns_desc">
+                            </div>
+                            <div class="form-group">
+                                <label>Cảnh báo (Dòng chữ vàng)</label>
+                                <input type="text" id="no_dns_warning">
+                            </div>
+                            <button type="submit" class="btn-primary">Lưu Thay Đổi Gói Không Giữ Gold</button>
+                        </form>
+                    </div>
+
+                    <!-- Package 2: with_dns -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <span>🛡️</span> Gói Giữ Gold (Vĩnh Viễn)
+                                <span class="badge-num" id="with_dns_badge_num" style="background: rgba(16,185,129,0.15); color: #10B981; border-color: rgba(16,185,129,0.3);">30.000đ</span>
+                            </div>
+                        </div>
+                        <form onsubmit="savePackagePrice(event, 'with_dns')">
+                            <div class="form-group">
+                                <label>Giá gói (VND)</label>
+                                <input type="number" id="with_dns_price" step="1000" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Tên gói hiển thị</label>
+                                <input type="text" id="with_dns_name" required>
+                            </div>
+                            <div class="form-row">
+                                <div>
+                                    <label>Huy hiệu (Badge)</label>
+                                    <input type="text" id="with_dns_badge" placeholder="Khuyên Dùng ⭐">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Mô tả gói</label>
+                                <input type="text" id="with_dns_desc">
+                            </div>
+                            <div class="form-group">
+                                <label>Cảnh báo / Ghi chú</label>
+                                <input type="text" id="with_dns_warning">
+                            </div>
+                            <button type="submit" class="btn-primary" style="background: #10B981; color: #fff;">Lưu Thay Đổi Gói Giữ Gold</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Bank Config -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>💳</span> Cấu Hình Ngân Hàng Nạp Tiền (VietQR)
+                        </div>
+                        <button type="button" class="btn-secondary btn-sm" onclick="previewVietQR()">Xem Thử QR</button>
+                    </div>
+                    <form onsubmit="saveBankInfo(event)">
+                        <div class="form-row">
+                            <div>
+                                <label>Mã Ngân Hàng (Bank ID)</label>
+                                <select id="bank_id" onchange="previewVietQR()">
+                                    <option value="MB">MB Bank (Ngân Hàng Quân Đội)</option>
+                                    <option value="VCB">Vietcombank</option>
+                                    <option value="TCB">Techcombank</option>
+                                    <option value="ACB">ACB (Á Châu)</option>
+                                    <option value="VPB">VPBank</option>
+                                    <option value="TPB">TPBank</option>
+                                    <option value="BIDV">BIDV</option>
+                                    <option value="VIB">VIB</option>
+                                    <option value="STB">Sacombank</option>
+                                    <option value="VBA">Agribank</option>
+                                    <option value="MSB">MSB</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Tên Hiển Thị Ngân Hàng</label>
+                                <input type="text" id="bank_name" placeholder="MB Bank (Ngân Hàng Quân Đội)" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div>
+                                <label>Số Tài Khoản</label>
+                                <input type="text" id="account_number" placeholder="99991199991" required oninput="previewVietQR()">
+                            </div>
+                            <div>
+                                <label>Tên Chủ Tài Khoản (In hoa không dấu)</label>
+                                <input type="text" id="account_name" placeholder="DINH TUAN HUNG" required oninput="previewVietQR()">
+                            </div>
+                        </div>
+
+                        <div class="vietqr-preview-box" id="qrPreviewBox">
+                            <span style="font-size: 12px; color: var(--text-muted); font-weight: 600;">Xem trước mã VietQR tự động sinh:</span>
+                            <img id="vietqrPreviewImg" src="" alt="Mã VietQR" class="vietqr-img">
+                            <span id="vietqrPreviewText" style="font-size: 12px; color: var(--primary); font-weight: 700;"></span>
+                        </div>
+
+                        <button type="submit" class="btn-primary" style="margin-top: 16px;">Lưu Thông Tin Ngân Hàng</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Tab 2: Tokens Management -->
+            <div id="tab-tokens" class="tab-pane">
+                <div class="tip-box">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    <div>
+                        <b>Cách thêm Token API mới:</b> Bạn có thể dùng Proxyman, Charles Proxy, hoặc HTTP Catcher trên iPhone để bắt request <code>POST https://api.revenuecat.com/v1/receipts</code> khi bấm "Khôi phục gói mua" trong app Locket. Sau đó copy toàn bộ Header + Body rồi dán vào ô bên dưới, hệ thống sẽ tự động bóc tách mọi token!
+                    </div>
+                </div>
+
+                <!-- Raw Import Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>⚡</span> Nhập Token Tự Động Từ Request Raw (Proxyman / Charles / cURL)
+                        </div>
+                    </div>
+                    <div class="card-desc">
+                        Dán nội dung Request (Headers và JSON Body) hoặc lệnh cURL vào đây. Hệ thống tự động trích xuất <code>fetch_token</code>, <code>app_transaction</code>, <code>transaction_id</code>, <code>X-Post-Params-Hash</code>, <code>X-Headers-Hash</code>.
+                    </div>
+                    <form onsubmit="handleImportRawToken(event)">
+                        <div class="form-group">
+                            <label>Tên gợi nhớ cho Token (Tùy chọn)</label>
+                            <input type="text" id="rawTokenName" placeholder="Ví dụ: Token Charles iOS 18.2 (DINH TUAN HUNG)">
+                        </div>
+                        <div class="form-group">
+                            <label>Nội dung Raw Request hoặc JSON</label>
+                            <textarea id="rawTokenText" rows="6" placeholder="Dán Headers và Body của POST /v1/receipts hoặc curl..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary" id="btnImportRaw">
+                            <span>🚀 Tự Động Bóc Tách & Thêm Token Mới</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Active Tokens List -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>📋</span> Danh Sách API Tokens Đang Lưu
+                            <span class="badge-num" id="totalTokensCount">0</span>
+                        </div>
+                        <button type="button" class="btn-secondary btn-sm" onclick="loadTokensList()">
+                            🔄 Làm Mới
+                        </button>
+                    </div>
+
+                    <div id="tokensListContainer">
+                        <!-- Token items injected here -->
+                    </div>
+                </div>
+
+                <!-- Manual Token Addition -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>✍️</span> Thêm Token Thủ Công (Chi Tiết Từng Trường)
+                        </div>
+                    </div>
+                    <form onsubmit="handleManualAddToken(event)">
+                        <div class="form-row">
+                            <div>
+                                <label>Tên Token</label>
+                                <input type="text" id="manual_name" placeholder="Token iOS Thủ Công" required>
+                            </div>
+                            <div>
+                                <label>Product ID</label>
+                                <input type="text" id="manual_product_id" value="locket_199_1m">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Fetch Token (JWT)</label>
+                            <textarea id="manual_fetch_token" rows="3" placeholder="eyJhbGciOiJFUzI1NiIs..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>App Transaction (JWT)</label>
+                            <textarea id="manual_app_transaction" rows="3" placeholder="eyJhbGciOiJFUzI1NiIs..." required></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div>
+                                <label>Transaction ID</label>
+                                <input type="text" id="manual_transaction_id" value="570002518164026">
+                            </div>
+                            <div>
+                                <label>Is Sandbox</label>
+                                <select id="manual_is_sandbox">
+                                    <option value="false">False (Bản Production chính thức)</option>
+                                    <option value="true">True (Sandbox)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>X-Post-Params-Hash <span class="sub">(Tùy chọn)</span></label>
+                            <input type="text" id="manual_hash_params" class="input-code" placeholder="app_user_id,fetch_token,app_transaction:sha256:...">
+                        </div>
+                        <div class="form-group">
+                            <label>X-Headers-Hash <span class="sub">(Tùy chọn)</span></label>
+                            <input type="text" id="manual_hash_headers" class="input-code" placeholder="X-Is-Sandbox:sha256:...">
+                        </div>
+                        <button type="submit" class="btn-primary">Thêm Bộ Token Này</button>
+                    </form>
+                </div>
+
+                <!-- Advanced API Config -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>🔒</span> Cấu Hình API Nâng Cao (Global Keys)
+                        </div>
+                    </div>
+                    <form onsubmit="saveAdvancedConfig(event)">
+                        <div class="form-group">
+                            <label>RevenueCat Bearer Key</label>
+                            <input type="text" id="adv_revenuecat_bearer" class="input-code" placeholder="Nhập RevenueCat bearer token">
+                        </div>
+                        <div class="form-group">
+                            <label>Firebase AppCheck Token <span class="sub">(Cho Locket API profile lookup)</span></label>
+                            <textarea id="adv_firebase_appcheck" rows="2" class="input-code" placeholder="eyJraWQiOiJBNzFLSHciLC..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Locket Account Bearer Token <span class="sub">(Tùy chọn: dùng lấy tên gốc Locket trực tiếp từ API)</span></label>
+                            <textarea id="adv_locket_bearer" rows="2" class="input-code" placeholder="Nhập Locket bearer token"></textarea>
+                        </div>
+                        <button type="submit" class="btn-secondary" style="width: 100%;">Lưu Khóa Nâng Cao</button>
+                    </form>
+                </div>
+
+                <div class="card" style="margin-top: 18px;">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>⚡</span> Đăng Nhập Locket Tự Động (Lấy Bearer Token)
+                        </div>
+                    </div>
+                    <form onsubmit="handleLocketLogin(event)">
+                        <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 12px;">
+                            Nếu có tài khoản Locket (clone) đăng ký bằng Email &amp; Mật khẩu, bạn có thể đăng nhập trực tiếp tại đây để hệ thống tự động sinh và lưu Bearer Token.
+                        </p>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Email Locket</label>
+                                <input type="email" id="locket_login_email" placeholder="clone@gmail.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Mật khẩu</label>
+                                <input type="password" id="locket_login_pwd" placeholder="••••••••" required>
+                            </div>
+                        </div>
+                        <button type="submit" id="btn_locket_login" class="btn-primary" style="width: 100%; margin-top: 6px;">Đăng Nhập Locket &amp; Lấy Token</button>
+                    </form>
+                    <div style="margin-top: 14px; padding: 12px; background: rgba(255,255,255,0.03); border-radius: var(--radius-sm); border: 1px dashed var(--border); font-size: 12px; color: var(--text-muted); line-height: 1.6;">
+                        <strong style="color: var(--text);">📱 Nếu dùng tài khoản SĐT / Apple ID (Bắt qua App):</strong><br>
+                        1. Mở <strong>HTTP Catcher</strong> (con bướm) hoặc <strong>Shadowrocket</strong> trên iOS, bật VPN.<br>
+                        2. Mở Locket, tìm bạn bè hoặc lướt ảnh để phát sinh request.<br>
+                        3. Lọc domain <code>api.locketcamera.com</code>, bấm vào request bất kỳ.<br>
+                        4. Dán toàn bộ gói tin bắt được vào ô bên dưới rồi nhấn <em>Bóc Tách &amp; Lưu</em>:
+                    </div>
+                    <div style="margin-top: 12px;">
+                        <textarea id="locket_raw_input" rows="3" class="input-code" placeholder="Dán toàn bộ gói tin HTTP Catcher vào đây (chứa authorization: Bearer eyJ... và x-firebase-appcheck: eyJ...)"></textarea>
+                        <button type="button" onclick="handleImportLocketRaw()" class="btn-secondary" style="width: 100%; margin-top: 8px;">⚡ Bóc Tách &amp; Lưu Token Locket</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 3: Stats & Logs -->
+            <div id="tab-stats" class="tab-pane">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-num" id="statQueueSize">0</div>
+                        <div class="stat-lbl">Đang Trong Hàng Đợi</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num" id="statActiveTokens">0</div>
+                        <div class="stat-lbl">Token Đang Hoạt Động</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num" id="statTotalRequests">0</div>
+                        <div class="stat-lbl">Tổng Yêu Cầu Đã Gửi</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num" id="statIsProcessing">Rảnh</div>
+                        <div class="stat-lbl">Trạng Thái Xử Lý</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>📜</span> Yêu Cầu Nâng Cấp Gần Đây
+                        </div>
+                        <button type="button" class="btn-secondary btn-sm" onclick="loadStats()">
+                            🔄 Cập Nhật
+                        </button>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>Gói Nạp</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Thời Gian</th>
+                                    <th>Chi Tiết</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyTableBody">
+                                <tr>
+                                    <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">Chưa có yêu cầu nào gần đây</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 4: System Settings -->
+            <div id="tab-settings" class="tab-pane">
+                <div class="grid-2">
+                    <!-- Password -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <span>🔐</span> Đổi Mật Khẩu Admin
+                            </div>
+                        </div>
+                        <form onsubmit="handleChangePassword(event)">
+                            <div class="form-group">
+                                <label>Mật khẩu mới</label>
+                                <input type="password" id="newAdminPassword" required minlength="4" placeholder="Nhập mật khẩu mới...">
+                            </div>
+                            <div class="form-group">
+                                <label>Nhập lại mật khẩu mới</label>
+                                <input type="password" id="confirmAdminPassword" required minlength="4" placeholder="Xác nhận lại...">
+                            </div>
+                            <button type="submit" class="btn-primary">Cập Nhật Mật Khẩu</button>
+                        </form>
+                    </div>
+
+                    <!-- Telegram -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <span>📱</span> Thông Báo Telegram
+                            </div>
+                        </div>
+                        <div class="card-desc">
+                            Nhận thông báo ngay lập tức khi có người dùng nâng cấp Gold thành công.
+                        </div>
+                        <form onsubmit="handleSaveTelegram(event)">
+                            <div class="form-group">
+                                <label>Telegram Bot Token</label>
+                                <input type="text" id="tg_bot_token" class="input-code" placeholder="8694146843:AAFiBcBr...">
+                            </div>
+                            <div class="form-group">
+                                <label>Telegram Chat ID</label>
+                                <input type="text" id="tg_chat_id" class="input-code" placeholder="7114174347">
+                            </div>
+                            <button type="submit" class="btn-secondary" style="width: 100%;">Lưu Cấu Hình Telegram</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 5: DNS Configuration -->
+            <div id="tab-dns" class="tab-pane">
+                <div class="tip-box">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                    <div>
+                        <b>Cấu Hình DNS Chống Mất Gold (Anti-Revoke):</b> Hồ sơ cấu hình <code>locket.mobileconfig</code> giúp chặn các yêu cầu thu hồi bản quyền từ RevenueCat trên iOS, bảo vệ quyền lợi Gold lâu dài cho khách hàng.
+                    </div>
+                </div>
+
+                <div class="card" style="max-width: 600px;">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>🛡️</span> Cấu Hình DNS (locket.mobileconfig)
+                        </div>
+                        <span class="badge badge-success">Sẵn Sàng</span>
+                    </div>
+                    <div class="card-desc">
+                        Hồ sơ cấu hình iOS chặn các domain kiểm tra và thu hồi bản quyền của RevenueCat.
+                    </div>
+                    <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 16px; font-size: 13px;">
+                        <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                            <span style="color:var(--text-muted);">Tên file:</span>
+                            <b>locket.mobileconfig</b>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                            <span style="color:var(--text-muted);">Định dạng:</span>
+                            <b>Apple Aspen Config Profile</b>
+                        </div>
+                        <div style="display:flex; justify-content:space-between;">
+                            <span style="color:var(--text-muted);">Đường dẫn:</span>
+                            <code style="color:var(--primary);">/download-config</code>
+                        </div>
+                    </div>
+                    <button onclick="downloadAdminDns()" class="btn-primary" style="width:100%; text-align:center; border:none; cursor:pointer; padding:10px 16px; border-radius:10px;">
+                        🛡️ Tải Cấu Hình DNS (.mobileconfig)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab 6: Orders & Auto Bank -->
+            <div id="tab-orders" class="tab-pane">
+                <div class="tip-box">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                    <div>
+                        <b>Cổng Thanh Toán Tự Động (thueapibank.vn):</b> Khi khách quét mã QR chuyển tiền đúng nội dung (Mã đơn LK...), tiền nổ vào tài khoản ZaloPay / Bản Việt thì hệ thống tự động kích hoạt Gold ngay sau 2-3 giây.
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <!-- Cron Bank Settings Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title"><span>⚡</span> Cấu Hình Cron Bank (Tự Động Quét)</div>
+                            <span class="badge badge-success">Khuyên Dùng</span>
+                        </div>
+                        <div class="card-desc">
+                            Thêm link Cron này vào mục <b>Quản lý Cron</b> trên <b>thueapibank.vn</b> (chu kỳ 5s - 10s) để tự động quét lịch sử ZaloPay 24/7.
+                        </div>
+
+                        <div class="form-group" style="margin-top:12px;">
+                            <label>Link Cron Quét Lịch Sử ZaloPay</label>
+                            <div style="display:flex; gap:8px;">
+                                <input type="text" id="adminCronUrl" readonly style="font-family:monospace; font-size:12px; background:rgba(0,0,0,0.4);" value="">
+                                <button type="button" class="btn-secondary" onclick="copyCronUrl(this)" style="white-space:nowrap;">Copy Cron</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Token ZaloPay Đang Dùng</label>
+                            <div style="display:flex; gap:8px;">
+                                <input type="text" id="adminZaloToken" readonly style="font-family:monospace; font-size:12px; background:rgba(0,0,0,0.4);" value="498705aae1752f7c0658c6f622317daf">
+                                <button type="button" class="btn-secondary" onclick="runManualCron(this)" style="white-space:nowrap; background:var(--primary); color:#000; font-weight:700;">⚡ Quét Ngay</button>
+                            </div>
+                        </div>
+
+                        <div style="font-size:11.5px; color:var(--text-muted); line-height:1.5; margin-top:8px;">
+                            📌 <b>Tự động thông minh:</b> Ngoài link Cron trên, mỗi khi khách đang chờ ở màn hình thanh toán, web cũng <b>tự động quét lịch sử ZaloPay</b> ngay sau 3 giây nên duyệt cực kỳ nhanh!
+                        </div>
+                    </div>
+
+                    <!-- Auto Bank Status Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title"><span>🏦</span> Thông Tin Nhận Tiền ZaloPay</div>
+                            <span class="badge badge-warning">Bản Việt Bank</span>
+                        </div>
+                        <div class="card-desc">
+                            Tài khoản nhận tiền tự động được tạo mã QR khi khách thanh toán.
+                        </div>
+
+                        <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 12px; padding: 14px; font-size: 13px; margin-top:12px;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                                <span style="color:var(--text-muted);">Ngân hàng:</span>
+                                <b>Bản Việt (BVBank - 970454)</b>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                                <span style="color:var(--text-muted);">Số TK ZaloPay:</span>
+                                <b style="font-family:monospace; color:var(--primary);">99ZP24261M43061759</b>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                                <span style="color:var(--text-muted);">Chủ TK:</span>
+                                <b>ZALOPAY_DINH TUAN HUNG</b>
+                            </div>
+                            <div style="display:flex; justify-content:space-between;">
+                                <span style="color:var(--text-muted);">Số ZaloPay:</span>
+                                <b>0353680869</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orders List Card -->
+                <div class="card" style="margin-top:20px;">
+                    <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="card-title"><span>📋</span> Danh Sách Đơn Thanh Toán Gần Nhất</div>
+                        <button type="button" class="btn-secondary" onclick="loadOrdersList()" style="padding:6px 12px; font-size:12px;">🔄 Làm mới</button>
+                    </div>
+
+                    <div style="overflow-x:auto; margin-top:10px;">
+                        <table style="width:100%; border-collapse:collapse; font-size:13px; text-align:left;">
+                            <thead>
+                                <tr style="border-bottom: 1.5px solid var(--border); color:var(--text-muted);">
+                                    <th style="padding:10px 8px;">Mã Đơn</th>
+                                    <th style="padding:10px 8px;">Khách Hàng</th>
+                                    <th style="padding:10px 8px;">Gói</th>
+                                    <th style="padding:10px 8px;">Số Tiền</th>
+                                    <th style="padding:10px 8px;">Thời Gian</th>
+                                    <th style="padding:10px 8px;">Trạng Thái</th>
+                                    <th style="padding:10px 8px; text-align:center;">Thao Tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTableBody">
+                                <tr>
+                                    <td colspan="7" style="text-align:center; padding:20px; color:var(--text-muted);">Đang tải dữ liệu...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const swalConfig = {
+            customClass: {
+                popup: 'clean-popup',
+                confirmButton: 'clean-confirm',
+                cancelButton: 'clean-cancel'
+            },
+            buttonsStyling: false
+        };
+
+        let authToken = localStorage.getItem('uplocket_admin_token') || '';
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            if (authToken) {
+                checkAuthAndLoad();
+            } else {
+                showLogin();
+            }
+        });
+
+        function showLogin() {
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('dashboardSection').classList.add('hidden');
+            document.getElementById('btnLogout').classList.add('hidden');
+        }
+
+        function showDashboard() {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('dashboardSection').classList.remove('hidden');
+            document.getElementById('btnLogout').classList.remove('hidden');
+            loadAllData();
+        }
+
+        function downloadAdminDns() {
+            window.location.href = `/download-config?token=${encodeURIComponent(authToken)}`;
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const pwd = document.getElementById('adminPassword').value.trim();
+            const btn = document.getElementById('btnLoginSubmit');
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password: pwd })
+                });
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    authToken = data.token;
+                    localStorage.setItem('uplocket_admin_token', authToken);
+                    Swal.fire({ icon: 'success', title: 'Thành công', text: 'Chào mừng quay trở lại!', timer: 1200, showConfirmButton: false });
+                    showDashboard();
+                } else {
+                    Swal.fire({ icon: 'error', title: 'Đăng nhập thất bại', text: data.msg || 'Mật khẩu không đúng' });
+                }
+            } catch (err) {
+                Swal.fire({ icon: 'error', title: 'Lỗi', text: 'Không kết nối được server.' });
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('uplocket_admin_token');
+            authToken = '';
+            showLogin();
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+
+            const targetPane = document.getElementById(`tab-${tabId}`);
+            if (targetPane) targetPane.classList.add('active');
+
+            const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+            if (activeBtn) activeBtn.classList.add('active');
+
+            if (tabId === 'stats') {
+                loadStats();
+            } else if (tabId === 'tokens') {
+                loadTokensList();
+            } else if (tabId === 'orders') {
+                loadOrdersList();
+            }
+        }
+
+        async function fetchAdmin(url, options = {}) {
+            options.headers = options.headers || {};
+            options.headers['Authorization'] = `Bearer ${authToken}`;
+            const res = await fetch(url, options);
+            if (res.status === 401) {
+                logout();
+                throw new Error('Hết phiên đăng nhập. Vui lòng đăng nhập lại.');
+            }
+            return res;
+        }
+
+        async function checkAuthAndLoad() {
+            try {
+                const res = await fetchAdmin('/api/admin/config');
+                if (res.ok) {
+                    showDashboard();
+                } else {
+                    showLogin();
+                }
+            } catch {
+                showLogin();
+            }
+        }
+
+        async function loadAllData() {
+            try {
+                const res = await fetchAdmin('/api/admin/config');
+                const json = await res.json();
+                if (!json.success) return;
+
+                const cfg = json.data;
+
+                // Load Package: no_dns
+                const no_dns = cfg.payment.packages.no_dns || {};
+                document.getElementById('no_dns_price').value = no_dns.price || 10000;
+                document.getElementById('no_dns_name').value = no_dns.name || 'Không Giữ Gold';
+                document.getElementById('no_dns_badge').value = no_dns.badge || 'Tiết Kiệm';
+                document.getElementById('no_dns_desc').value = no_dns.desc || '';
+                document.getElementById('no_dns_warning').value = no_dns.warning || '';
+                document.getElementById('no_dns_badge_num').textContent = no_dns.price_formatted || `${no_dns.price}đ`;
+
+                // Load Package: with_dns
+                const with_dns = cfg.payment.packages.with_dns || {};
+                document.getElementById('with_dns_price').value = with_dns.price || 30000;
+                document.getElementById('with_dns_name').value = with_dns.name || 'Giữ Gold (Vĩnh Viễn)';
+                document.getElementById('with_dns_badge').value = with_dns.badge || 'Khuyên Dùng ⭐';
+                document.getElementById('with_dns_desc').value = with_dns.desc || '';
+                document.getElementById('with_dns_warning').value = with_dns.warning || '';
+                document.getElementById('with_dns_badge_num').textContent = with_dns.price_formatted || `${with_dns.price}đ`;
+
+                // Load Bank info
+                document.getElementById('bank_id').value = cfg.payment.bank_id || 'MB';
+                document.getElementById('bank_name').value = cfg.payment.bank_name || '';
+                document.getElementById('account_number').value = cfg.payment.account_number || '';
+                document.getElementById('account_name').value = cfg.payment.account_name || '';
+                previewVietQR();
+
+                // Advanced keys
+                document.getElementById('adv_revenuecat_bearer').value = cfg.revenuecat_bearer || '';
+                document.getElementById('adv_firebase_appcheck').value = cfg.firebase_appcheck || '';
+                document.getElementById('adv_locket_bearer').value = cfg.locket_bearer || '';
+
+                // Telegram
+                if (cfg.telegram) {
+                    document.getElementById('tg_bot_token').value = cfg.telegram.bot_token || '';
+                    document.getElementById('tg_chat_id').value = cfg.telegram.chat_id || '';
+                }
+
+                // Tokens
+                renderTokens(cfg.tokens_summary || []);
+
+                // Stats
+                loadStats();
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function previewVietQR() {
+            const bankId = document.getElementById('bank_id').value;
+            const accountNo = document.getElementById('account_number').value.trim();
+            const accountName = document.getElementById('account_name').value.trim();
+            const price = document.getElementById('with_dns_price').value || 30000;
+
+            if (!accountNo) {
+                document.getElementById('vietqrPreviewImg').style.display = 'none';
+                document.getElementById('vietqrPreviewText').textContent = 'Vui lòng nhập số tài khoản để tạo QR';
+                return;
+            }
+
+            const qrUrl = `https://img.vietqr.io/image/${bankId}-${accountNo}-compact2.png?amount=${price}&addInfo=LOCKET%20TEST&accountName=${encodeURIComponent(accountName)}`;
+            const img = document.getElementById('vietqrPreviewImg');
+            img.src = qrUrl;
+            img.style.display = 'block';
+            document.getElementById('vietqrPreviewText').textContent = `${bankId} - ${accountNo} (${accountName})`;
+        }
+
+        async function savePackagePrice(e, pkgId) {
+            e.preventDefault();
+            const price = document.getElementById(`${pkgId}_price`).value;
+            const name = document.getElementById(`${pkgId}_name`).value;
+            const badge = document.getElementById(`${pkgId}_badge`).value;
+            const desc = document.getElementById(`${pkgId}_desc`).value;
+            const warning = document.getElementById(`${pkgId}_warning`).value;
+
+            try {
+                const res = await fetchAdmin('/api/admin/price', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        package_id: pkgId,
+                        price: parseInt(price),
+                        name, badge, desc, warning
+                    })
+                });
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    Swal.fire({ icon: 'success', title: 'Đã lưu', text: `Đã cập nhật giá gói ${name} thành công!` });
+                    loadAllData();
+                } else {
+                    Swal.fire({ icon: 'error', title: 'Lỗi', text: data.msg });
+                }
+            } catch (err) {
+                Swal.fire({ icon: 'error', title: 'Lỗi', text: err.message });
+            }
+        }
+
+        async function saveBankInfo(e) {
+            e.preventDefault();
+            const bankId = document.getElementById('bank_id').value;
+            const bankName = document.getElementById('bank_name').value;
+            const accountNo = document.getElementById('account_number').value;
+            const accountName = document.getElementById('account_name').value;
+
+            try {
+                const res = await fetchAdmin('/api/admin/bank', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        bank_id: bankId,
+                        bank_name: bankName,
+                        account_number: accountNo,
+                        account_name: accountName
+                    })
+                });
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    Swal.fire({ icon: 'success', title: 'Đã lưu', text: 'Thông tin tài khoản VietQR đã được cập nhật!' });
+                    previewVietQR();
+                } else {
+                    Swal.fire({ icon: 'error', title: 'Lỗi', text: data.msg });
+                }
+            } catch (err) {
+                Swal.fire({ icon: 'error', title: 'Lỗi', text: err.message });
+            }
+        }
+
+        async function loadTokensList() {
+            try {
+                const res = await fetchAdmin('/api/admin/tokens');
+                const data = await res.json();
+                if (data.success) {
+                    renderTokens(data.token_sets || []);
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function renderTokens(tokens) {
+            window.currentTokens = tokens || [];
+            const container = document.getElementById('tokensListContainer');
+            document.getElementById('totalTokensCount').textContent = tokens.length;
+
+            if (!tokens || tokens.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; color: var(--text-muted); padding: 30px;">
+                        ⚠️ Chưa có token nào được cấu hình. Hãy dán request raw hoặc thêm token ở form bên dưới.
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = tokens.map((t, idx) => {
+                const activeClass = t.active ? 'is-active' : 'is-inactive';
+                const statusBadge = t.active
+                    ? '<span class="badge-status badge-active">● Đang Bật</span>'
+                    : '<span class="badge-status badge-inactive">○ Đã Tắt</span>';
+
+                let liveBadge = '';
+                if (t.test_status === '200_OK') {
+                    liveBadge = `<span class="badge-status badge-live-ok" title="RevenueCat đã xác thực thành công">🟢 Live 200 OK</span>`;
+                } else if (t.test_status && t.test_status.startsWith('HTTP')) {
+                    liveBadge = `<span class="badge-status badge-live-err" title="Mã trạng thái RevenueCat: ${t.test_status}">🔴 ${t.test_status}</span>`;
+                } else {
+                    liveBadge = `<span class="badge-status badge-inactive" title="Chưa kiểm tra Live">⏳ Chưa test</span>`;
+                }
+
+                let expBadge = '';
+                if (t.expires_at) {
+                    if (t.is_expired) {
+                        expBadge = `<span class="badge-status badge-warning" title="${t.expiry_note || 'Hết chu kỳ Apple, hoạt động vĩnh viễn qua DNS'}">⚡ Chu kỳ Apple: ${t.expires_at.split(' ')[0]} (${t.days_text})</span>`;
+                    } else {
+                        expBadge = `<span class="badge-status badge-valid" title="${t.expiry_note || 'Còn trong chu kỳ Apple'}">✓ Còn hạn Apple (${t.days_text || t.expires_at})</span>`;
+                    }
+                }
+
+                return `
+                    <div class="token-item ${activeClass}" id="token-card-${t.id}">
+                        <div class="token-head">
+                            <div class="token-title">
+                                <span>🔑</span>
+                                <span>${t.name}</span>
+                                ${statusBadge}
+                                ${liveBadge}
+                                ${expBadge}
+                            </div>
+                            <span style="font-size: 11px; color: var(--text-muted);">#${idx + 1}</span>
+                        </div>
+                        <div class="token-meta">
+                            <span>Mã Gói: <b>${t.product_id}</b> (${t.subscription_period || 'Thuê bao'})</span>
+                            <span>Transaction: <b>${t.transaction_id || 'N/A'}</b></span>
+                            <span>Apple Cấp Ký: <b>${t.signed_date || 'N/A'}</b></span>
+                            <span>Hạn Chu Kỳ: <b>${t.expires_at || 'Không xác định'}</b></span>
+                            <span>Tương Thích: <b style="color: #34d399;">${t.compatibility}</b></span>
+                            <span>Đã Test: <b>${t.last_tested || 'Chưa test'}</b></span>
+                        </div>
+                        ${t.is_expired ? `
+                            <div class="token-explanation-box token-exp-warn">
+                                💡 <b>Phân tích hạn dùng:</b> Chu kỳ thanh toán Apple kết thúc vào <code>${t.expires_at}</code> (${t.days_text}). 
+                                Token đã xác thực <b>Live 200 OK</b> trên RevenueCat và sẽ <b>giữ Gold VĨNH VIỄN</b> cho khách mua gói <b>Giữ Gold (30k)</b> qua cấu hình DNS chống thu hồi.
+                            </div>
+                        ` : `
+                            <div class="token-explanation-box token-exp-ok">
+                                ✓ <b>Phân tích hạn dùng:</b> Token đang trong chu kỳ thanh toán hợp lệ của Apple (${t.days_text || 'còn hạn'}). Hoạt động hoàn hảo cho mọi gói bán.
+                            </div>
+                        `}
+                        <div class="token-actions">
+                            <button type="button" class="btn-secondary btn-sm" onclick="testToken('${t.id}')">
+                                🧪 Kiểm Tra Live
+                            </button>
+                            <button type="button" class="btn-secondary btn-sm" onclick="showTokenDetails('${t.id}')">
+                                ℹ️ Chi Tiết Hạn & Receipt
+                            </button>
+                            <button type="button" class="btn-secondary btn-sm" onclick="toggleToken('${t.id}')">
+                                ${t.active ? '⏸️ Tắt Token' : '▶️ Bật Token'}
+                            </button>
+                            <button type="button" class="btn-secondary btn-sm" style="color: var(--danger); border-color: rgba(239,68,68,0.25);" onclick="deleteToken('${t.id}')">
+                                🗑️ Xóa
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function showTokenDetails(tokenId) {
+            const t = (window.currentTokens || []).find(item => item.id === tokenId);
+            if (!t) return;
+
+            Swal.fire({
+                title: `Chi Tiết Token: ${t.name}`,
+                width: 650,
+                html: `
+                    <div style="text-align: left; font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+                        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 12px;">
+                            <h4 style="margin: 0 0 8px 0; color: var(--text); font-size: 14px;">📋 Thông Tin Gói & Thiết Bị</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 12px;">
+                                <div>• ID Token: <code>${t.id}</code></div>
+                                <div>• Mã gói: <b style="color: var(--primary);">${t.product_id}</b></div>
+                                <div>• Chu kỳ thuê bao: <b>${t.subscription_period || 'N/A'}</b></div>
+                                <div>• Môi trường: <b>${t.is_sandbox ? 'Sandbox' : 'Production'}</b></div>
+                                <div>• Transaction ID: <code>${t.transaction_id || 'N/A'}</code></div>
+                                <div>• Chữ ký Hashes: <b>${t.has_hashes ? 'Có mã băm' : 'Không'}</b></div>
+                            </div>
+                        </div>
+
+                        <div style="background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.3); border-radius: 8px; padding: 12px; margin-bottom: 12px;">
+                            <h4 style="margin: 0 0 8px 0; color: #fbbf24; font-size: 14px;">📅 Mốc Thời Gian & Hạn Dùng Apple</h4>
+                            <div style="font-size: 12px; line-height: 1.7; color: #e2e8f0;">
+                                <div>• Ngày mua ban đầu: <b>${t.original_purchase_date || 'N/A'}</b></div>
+                                <div>• Ngày bắt đầu chu kỳ này: <b>${t.purchase_date || 'N/A'}</b></div>
+                                <div>• Ngày Apple cấp chữ ký: <b>${t.signed_date || 'N/A'}</b></div>
+                                <div>• Hạn chu kỳ Apple StoreKit: <b style="color: ${t.is_expired ? '#fbbf24' : '#34d399'};">${t.expires_at || 'N/A'} (${t.days_text || 'N/A'})</b></div>
+                            </div>
+                        </div>
+
+                        <div style="background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.3); border-radius: 8px; padding: 12px;">
+                            <h4 style="margin: 0 0 8px 0; color: #34d399; font-size: 14px;">🧪 Kiểm Tra Máy Chủ & Độ Tương Thích</h4>
+                            <div style="font-size: 12px; line-height: 1.7; color: #e2e8f0;">
+                                <div>• Trạng thái Live RevenueCat: <b style="color: #34d399;">${t.test_status === '200_OK' ? '🟢 Live 200 OK (Đã xác thực)' : (t.test_status || 'Chưa kiểm tra')}</b></div>
+                                <div>• Lần kiểm tra gần nhất: <b>${t.last_tested || 'Chưa có'}</b></div>
+                                <div style="margin-top: 6px; padding-top: 6px; border-top: 1px dashed rgba(255,255,255,0.1);">
+                                    <b>🛡️ Cơ chế giữ Gold thực tế:</b><br/>
+                                    ${t.expiry_note || t.compatibility}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                confirmButtonText: 'Đóng'
+            });
+        }
+
+        async function handleImportRawToken(e) {
+            e.preventDefault();
+            const text = document.getElementById('rawTokenText').value;
+            const name = document.getElementById('rawTokenName').value;
+            const btn = document.getElementById('btnImportRaw');
+            btn.disabled = true;
+
+            try {
+                const res = await fetchAdmin('/api/admin/tokens/import-raw', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text, name })
+                });
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    const t = data.token;
+                    const liveOk = data.live_test && data.live_test.success;
+                    const liveStatusBadge = liveOk
+                        ? `<span style="background: rgba(16,185,129,0.2); color: #34d399; padding: 3px 8px; border-radius: 6px; font-weight: 600; font-size: 12px; border: 1px solid rgba(16,185,129,0.4);">🟢 LIVE 200 OK</span>`
+                        : `<span style="background: rgba(239,68,68,0.2); color: #f87171; padding: 3px 8px; border-radius: 6px; font-weight: 600; font-size: 12px; border: 1px solid rgba(239,68,68,0.4);">⚠️ ${data.live_test ? data.live_test.msg : 'Chưa test'}</span>`;
+
+                    const cycleBadge = t.is_expired
+                        ? `<span style="background: rgba(245,158,11,0.2); color: #fbbf24; padding: 2px 7px; border-radius: 4px; font-weight: 600; font-size: 11px;">⚡ Chu kỳ Apple: ${t.expires_at || 'Đã hết'} (${t.days_text || 'Hết chu kỳ'})</span>`
+                        : `<span style="background: rgba(16,185,129,0.2); color: #34d399; padding: 2px 7px; border-radius: 4px; font-weight: 600; font-size: 11px;">✓ Còn hạn chu kỳ: ${t.expires_at} (${t.days_text})</span>`;
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Đã Bóc Tách & Thử Nghiệm Live! 🎉',
+                        width: 620,
+                        html: `
+                            <div style="text-align: left; font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+                                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 12px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                        <span style="font-weight: 600; color: var(--text); font-size: 15px;">🔑 ${t.name}</span>
+                                        ${liveStatusBadge}
+                                    </div>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 12px;">
+                                        <div>• Mã gói: <code style="color: var(--primary);">${t.product_id}</code> (${t.subscription_period || 'Thuê bao'})</div>
+                                        <div>• Transaction ID: <code>${t.transaction_id || 'N/A'}</code></div>
+                                        <div>• Ngày bắt đầu mua: <b>${t.purchase_date || 'N/A'}</b></div>
+                                        <div>• Ngày Apple cấp ký: <b>${t.signed_date || 'N/A'}</b></div>
+                                    </div>
+                                </div>
+
+                                <div style="background: rgba(245,158,11,0.08); border-left: 3px solid #f59e0b; border-radius: 6px; padding: 10px 12px; margin-bottom: 12px;">
+                                    <div style="font-weight: 600; color: #fbbf24; margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between;">
+                                        <span>📅 Phân tích Hạn Dùng & Chu Kỳ Thuê Bao</span>
+                                        ${cycleBadge}
+                                    </div>
+                                    <div style="color: #cbd5e1; font-size: 12px; line-height: 1.6;">
+                                        <p style="margin: 3px 0;">• <b>Hạn chu kỳ Apple StoreKit:</b> <code>${t.expires_at || 'Không xác định'}</code> (${t.days_text || ''})</p>
+                                        <p style="margin: 3px 0;">• <b>Cơ chế Giữ Gold:</b> ${t.expiry_note || t.compatibility}</p>
+                                    </div>
+                                </div>
+
+                                <div style="background: rgba(16,185,129,0.08); border-left: 3px solid #10b981; border-radius: 6px; padding: 10px 12px;">
+                                    <div style="font-weight: 600; color: #34d399; margin-bottom: 4px;">🛡️ Khả năng hoạt động với các gói bán:</div>
+                                    <div style="color: #cbd5e1; font-size: 12px; line-height: 1.6;">
+                                        <div>✅ <b>Gói Giữ Gold (30.000đ - Cài DNS):</b> <b>Hoạt động VĨNH VIỄN</b> (DNS chặn máy chủ quét thu hồi).</div>
+                                        <div>⚡ <b>Gói Không Giữ Gold (10.000đ):</b> Kích hoạt thành công ngay lập tức qua máy chủ RevenueCat.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `,
+                        confirmButtonText: 'Đã Hiểu & Lưu Token'
+                    });
+                    document.getElementById('rawTokenText').value = '';
+                    document.getElementById('rawTokenName').value = '';
+                    loadTokensList();
+                } else {
+                    Swal.fire({ icon: 'error', title: 'Lỗi bóc tách', text: data.msg });
+                }
+            } catch (err) {
+                Swal.fire({ icon: 'error', title: 'Lỗi', text: err.message });
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        async function handleManualAddToken(e) {
+            e.preventDefault();
+            const tokenData = {
+                name: document.getElementById('manual_name').value.trim(),
+                product_id: document.getElementById('manual_product_id').value.trim(),
+                fetch_token: document.getElementById('manual_fetch_token').value.trim(),
+                app_transaction: document.getElementById('manual_app_transaction').value.trim(),
+                transaction_id: document.getElementById('manual_transaction_id').value.trim(),
+                is_sandbox: document.getElementById('manual_is_sandbox').value === 'true',
+                hash_params: document.getElementById('manual_hash_params').value.trim(),
+                hash_headers: document.getElementById('manual_hash_headers').value.trim()
+            };
+
+            try {
+                const res = await fetchAdmin('/api/admin/tokens/add', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(tokenData)
+                });
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    Swal.fire({ icon: 'success', title: 'Thành công', text: 'Đã thêm token mới vào hệ thống!' });
+                    loadTokensList();
+                } else {
+                    Swal.fire({ icon: 'error', title: 'Lỗi', text: data.msg });
+                }
+            } catch (err) {
+                Swal.fire({ icon: 'error', title: 'Lỗi', text: err.message });
+            }
+        }
+
+        async function toggleToken(tokenId) {
+            try {
+                const res = await fetchAdmin('/api/admin/tokens/toggle', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token_id: tokenId })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    loadTokensList();
+                } else {
+                    Swal.fire({ icon: 'error', title: 'Lỗi', text: data.msg });
+                }
+            } catch (err) {
+                Swal.fire({ icon: 'error', title: 'Lỗi', text: err.message });
+            }
+        }
+
+        async function deleteToken(tokenId) {
+            const confirm = await Swal.fire({
+                title: 'Xác nhận xóa?',
+                text: 'Bạn có chắc chắn muốn xóa bộ token này không?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Xóa ngay',
+                cancelButtonText: 'Hủy'
+            });
+
+            if (!confirm.isConfirmed) return;
+
+            try {
+                const res = await fetchAdmin('/api/admin/tokens/delete', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token_id: tokenId })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    Swal.fire({ icon: 'success', title: 'Đã xóa', text: 'Token đã được gỡ bỏ.' });
+                    loadTokensList();
+                } else {
+                    Swal.fire({ icon: 'error', title: 'Lỗi', text: data.msg });
+                }
+            } catch (err) {
+                Swal.fire({ icon: 'error', title: 'Lỗi', text: err.message });
+            }
+        }
+
+        async function testToken(tokenId) {
+            Swal.fire({
+                title: 'Đang kiểm tra token...',
+                text: 'Gửi request probe tới RevenueCat API...',
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading()
+            });
+
+            try {
+                const res = await fetchAdmin('/api/admin/tokens/test', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token_id: tokenId })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Token Sống (HTTP 200 OK) 🎉',
+                        html: `
+                            <div style="text-align: left; font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+                                <p style="color: #34d399; font-weight: 600;">✓ RevenueCat chấp nhận và kích hoạt quyền Gold thành công!</p>
+                                <p>• Mã phản hồi: <code>HTTP 200 OK</code></p>
+                                <p>• Đã cập nhật trạng thái <b>Live 200 OK</b> cho token này trên hệ thống.</p>
+                            </div>
+                        `
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: `Kết quả: HTTP ${data.status_code}`,
+                        text: data.msg || 'Token có thể đã hết hạn hoặc bị từ chối.'
+                    });
+                }
+                loadTokensList();
+            } catch (err) {
+                Swal.fire({ icon: 'error', title: 'Lỗi kết nối', text: err.message });
+            }
+        }
+
+        async function saveAdvancedConfig(e) {
+            e.preventDefault();
+            const bearer = document.getElementById('adv_revenuecat_bearer').value.trim();
+            const appcheck = document.getElementById('adv_firebase_appcheck').value.trim();
+            const locketBearer = document.getElementById('adv_locket_bearer').value.trim();
+
+            try {
+                const res = await fetchAdmin('/api/admin/tokens/advanced', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ revenuecat_bearer: bearer, firebase_appcheck: appcheck, locket_bearer: locketBearer })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    Swal.fire({ icon: 'success', title: 'Thành công', text: data.msg });
+                }
+            } catch (err) {
+                Swal.fire({ icon: 'error', title: 'Lỗi', text: err.message });
+            }
+        }
+
+        async function handleLocketLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('locket_login_email').value.trim();
+            const password = document.getElementById('locket_login_pwd').value.trim();
+            const btn = document.getElementById('btn_locket_login');
+            btn.disabled = true;
+            btn.textContent = 'Đang đăng nhập...';
+
+            try {
+                const res = await fetchAdmin('/api/admin/locket/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    document.getElementById('adv_locket_bearer').value = data.token || '';
+                    Swal.fire({ icon: 'success', title: 'Thành công', text: data.msg });
+                } else {
+                    Swal.fire({ icon: 'error', title: 'Đăng nhập thất bại', text: data.msg });
+                }
+            } catch (err) {
+                Swal.fire({ icon: 'error', title: 'Lỗi', text: err.message });
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Đăng Nhập Locket & Lấy Token';
+            }
+        }
+
+        async function handleImportLocketRaw() {
+            const raw = document.getElementById('locket_raw_input').value.trim();
+            if (!raw) {
+                Swal.fire({ icon: 'warning', title: 'Thông báo', text: 'Vui lòng dán gói tin vào ô.' });
+                return;
+            }
+            try {
+                const res = await fetchAdmin('/api/admin/tokens/import-locket-raw', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: raw })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    if (data.locket_bearer) {
+                        document.getElementById('adv_locket_bearer').value = data.locket_bearer;
+                    }
+                    if (data.firebase_appcheck) {
+                        document.getElementById('adv_firebase_appcheck').value = data.firebase_appcheck;
+                    }
+                    Swal.fire({ icon: 'success', title: 'Thành công', text: data.msg });
+                } else {
+                    Swal.fire({ icon: 'error', title: 'Lỗi', text: data.msg });
+                }
+            } catch (err) {
+                Swal.fire({ icon: 'error', title: 'Lỗi', text: err.message });
+            }
+        }
+
+        async function handleChangePassword(e) {
+            e.preventDefault();
+            const newPwd = document.getElementById('newAdminPassword').value;
+            const confirmPwd = document.getElementById('confirmAdminPassword').value;
+
+            if (newPwd !== confirmPwd) {
+                Swal.fire({ icon: 'error', title: 'Lỗi', text: 'Mật khẩu xác nhận không khớp.' });
+                return;
+            }
+
+            try {
+                const res = await fetchAdmin('/api/admin/password', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ new_password: newPwd })
+                });
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    authToken = newPwd;
+                    localStorage.setItem('uplocket_admin_token', authToken);
+                    Swal.fire({ icon: 'success', title: 'Thành công', text: 'Mật khẩu Admin mới đã được lưu!' });
+                    document.getElementById('newAdminPassword').value = '';
+                    document.getElementById('confirmAdminPassword').value = '';
+                } else {
+                    Swal.fire({ icon: 'error', title: 'Lỗi', text: data.msg });
+                }
+            } catch (err) {
+                Swal.fire({ icon: 'error', title: 'Lỗi', text: err.message });
+            }
+        }
+
+        async function handleSaveTelegram(e) {
+            e.preventDefault();
+            const botToken = document.getElementById('tg_bot_token').value.trim();
+            const chatId = document.getElementById('tg_chat_id').value.trim();
+
+            try {
+                const res = await fetchAdmin('/api/admin/telegram', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ bot_token: botToken, chat_id: chatId })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    Swal.fire({ icon: 'success', title: 'Thành công', text: 'Đã lưu cài đặt Telegram.' });
+                }
+            } catch (err) {
+                Swal.fire({ icon: 'error', title: 'Lỗi', text: err.message });
+            }
+        }
+
+        async function loadStats() {
+            try {
+                const res = await fetchAdmin('/api/admin/stats');
+                const json = await res.json();
+                if (!json.success) return;
+
+                const data = json.data;
+                document.getElementById('statQueueSize').textContent = data.queue_size;
+                document.getElementById('statActiveTokens').textContent = data.active_tokens_count;
+                document.getElementById('statTotalRequests').textContent = data.total_requests;
+                document.getElementById('statIsProcessing').textContent = data.is_processing ? 'Đang Xử Lý' : 'Rảnh';
+                document.getElementById('statIsProcessing').style.color = data.is_processing ? '#FFA500' : '#10B981';
+
+                const tbody = document.getElementById('historyTableBody');
+                if (!data.recent_history || data.recent_history.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">Chưa có yêu cầu nào gần đây</td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                tbody.innerHTML = data.recent_history.map(item => {
+                    const statusHtml = item.status === 'completed'
+                        ? '<span class="badge-status badge-valid">Thành công</span>'
+                        : '<span class="badge-status badge-expired">Lỗi</span>';
+
+                    return `
+                        <tr>
+                            <td style="font-family: monospace;">${item.id}</td>
+                            <td><b>@${item.username}</b></td>
+                            <td>${item.package_type === 'with_dns' ? '🛡️ Giữ Gold' : '⚡ Không Giữ'}</td>
+                            <td>${statusHtml}</td>
+                            <td style="color: var(--text-muted); font-size: 11.5px;">${item.timestamp}</td>
+                            <td style="font-size: 11.5px; color: ${item.error ? '#EF4444' : 'var(--text-muted)'}; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                ${item.error || 'Hoàn tất'}
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function copyCronUrl(btn) {
+            const url = document.getElementById('adminCronUrl').value;
+            navigator.clipboard.writeText(url);
+            btn.textContent = 'Đã chép!';
+            setTimeout(() => btn.textContent = 'Copy Cron', 1500);
+        }
+
+        async function runManualCron(btn) {
+            btn.disabled = true;
+            btn.textContent = 'Đang quét...';
+            try {
+                const res = await fetch('/api/cron/bank');
+                const data = await res.json();
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Đã quét xong!',
+                        html: `${data.msg}<br><span style="font-size:12px;color:var(--text-muted);">Tổng giao dịch kiểm tra: ${data.total_txs || 0}</span>`,
+                        ...swalConfig
+                    });
+                    loadOrdersList();
+                } else {
+                    Swal.fire({ icon: 'error', title: 'Lỗi', text: data.msg, ...swalConfig });
+                }
+            } catch (e) {
+                Swal.fire({ icon: 'error', title: 'Lỗi', text: 'Không thể kết nối API Cron.', ...swalConfig });
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '⚡ Quét Ngay';
+            }
+        }
+
+        async function loadOrdersList() {
+            const cronEl = document.getElementById('adminCronUrl');
+            if (cronEl) cronEl.value = `${window.location.origin}/cron.php`;
+
+            try {
+                const res = await fetchAdmin('/api/admin/orders');
+                const data = await res.json();
+                if (!data.success) return;
+
+                const tbody = document.getElementById('ordersTableBody');
+                if (!tbody) return;
+
+                const orders = data.orders || [];
+                if (orders.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:24px; color:var(--text-muted);">Chưa có đơn hàng nào được tạo.</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = orders.map(o => {
+                    let statusBadge = '<span class="badge badge-warning">⏳ Chờ Chuyển Tiền</span>';
+                    if (o.status === 'PAID') {
+                        statusBadge = '<span class="badge badge-primary">💰 Đã Nhận Tiền</span>';
+                    } else if (o.status === 'COMPLETED') {
+                        statusBadge = '<span class="badge badge-success">✅ Đã Lên Gold</span>';
+                    }
+
+                    return `
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                            <td style="padding:10px 8px;"><b style="color:var(--primary); font-family:monospace; font-size:14px;">${o.order_id}</b></td>
+                            <td style="padding:10px 8px;"><b>@${o.username}</b></td>
+                            <td style="padding:10px 8px;"><span style="font-size:12px; color:var(--text-muted);">${o.package_name || o.package_type}</span></td>
+                            <td style="padding:10px 8px;"><b style="color:#fff;">${o.amount_formatted || (o.amount + 'đ')}</b></td>
+                            <td style="padding:10px 8px; font-size:11.5px; color:var(--text-muted);">${o.created_time || '--'}</td>
+                            <td style="padding:10px 8px;">${statusBadge}</td>
+                            <td style="padding:10px 8px; text-align:center;">
+                                ${o.status !== 'COMPLETED' ? `
+                                    <button onclick="approveOrderManually('${o.order_id}', '${o.username}')" class="btn-primary" style="padding:5px 10px; font-size:11px; border:none; cursor:pointer; border-radius:6px;">
+                                        ⚡ Duyệt Gold
+                                    </button>
+                                ` : '<span style="color:#34D399; font-size:12px; font-weight:700;">Đã Xong</span>'}
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+
+            } catch (err) {
+                console.error('Lỗi tải danh sách đơn:', err);
+            }
+        }
+
+        async function approveOrderManually(orderId, username) {
+            const confirm = await Swal.fire({
+                title: 'Duyệt Thủ Công?',
+                html: `Kích hoạt Gold cho đơn <b style="color:var(--primary);">${orderId}</b> của khách <b>@${username}</b>?`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Duyệt Kích Hoạt',
+                cancelButtonText: 'Hủy',
+                ...swalConfig
+            });
+
+            if (confirm.isConfirmed) {
+                Swal.showLoading();
+                try {
+                    const res = await fetchAdmin('/api/admin/orders/approve', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ order_id: orderId })
+                    });
+                    const d = await res.json();
+                    if (d.success) {
+                        Swal.fire({ icon: 'success', title: 'Thành công', text: d.msg, ...swalConfig });
+                        loadOrdersList();
+                    } else {
+                        Swal.fire({ icon: 'error', title: 'Lỗi', text: d.msg, ...swalConfig });
+                    }
+                } catch (e) {
+                    Swal.fire({ icon: 'error', title: 'Lỗi', text: 'Không thể kết nối đến server.', ...swalConfig });
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
