@@ -22,10 +22,15 @@ import dotenv
 import requests
 from flask import Flask, render_template, request, jsonify, send_from_directory
 
-from api import LocketAPI, LocketAPIError, test_restore_token, safe_print
+from locket_api import LocketAPI, LocketAPIError, test_restore_token, safe_print
 from config_manager import config_manager, parse_raw_token_request, get_token_summary, decode_jwt_payload
 
-app = Flask(__name__)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+app = Flask(
+    __name__,
+    template_folder=os.path.join(BASE_DIR, "templates"),
+    static_folder=os.path.join(BASE_DIR, "static")
+)
 dotenv.load_dotenv()
 
 # Standalone API instance (no dependency on expired Firebase Auth)

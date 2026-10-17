@@ -1,21 +1,15 @@
 {
-    "version": 2,
-    "builds": [
-        {
-            "src": "app.py",
-            "use": "@vercel/python"
-        }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "app.py"
-        }
-    ],
-    "crons": [
-        {
-            "path": "/api/cron/bank",
-            "schedule": "* * * * *"
-        }
-    ]
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api/index.py"
+    }
+  ],
+  "crons": [
+    {
+      "path": "/cron.php",
+      "schedule": "* * * * *"
+    }
+  ]
 }
